@@ -32,7 +32,20 @@ var projects = {
 			"img/chanje1.jpg",
 			"img/chanje2.jpg"
 		]
-	}]
+	}],
+	"display": function() {
+		this.projects.forEach(function(project) {
+			$("#projects").append(HTMLprojectStart);
+			var title = HTMLprojectTitle.replace("%data%",project.title);
+			var dates = HTMLprojectDates.replace("%data%",project.dates);
+			var description = HTMLprojectDescription.replace("%data%",project.description);
+			var imagesURL = [];
+			project.images.forEach(function(url) {
+				imagesURL.push(HTMLprojectImage.replace("%data%",url));
+			});
+			$(".project-entry:last").append(title + dates + description + imagesURL.join(""));
+		});
+	}
 }
 
 var bio = {
@@ -100,9 +113,32 @@ if (bio.skills.length > 0) {
 	});
 }
 
-work.jobs.forEach(function(job) {
-	$("#workExperience").append(HTMLworkStart);
-	var employer = HTMLworkEmployer.replace("%data%",job.employer);
-	var title = HTMLworkTitle.replace("%data%",job.title);
-	$(".work-entry:last").append(employer + title);
-});
+function displayWork() {
+	work.jobs.forEach(function importWork(job) {
+		$("#workExperience").append(HTMLworkStart);
+		var employer = HTMLworkEmployer.replace("%data%",job.employer);
+		var title = HTMLworkTitle.replace("%data%",job.title);
+		var dates = HTMLworkDates.replace("%data%",job.dates);
+		var location = HTMLworkLocation.replace("%data%",job.location);
+		var description = HTMLworkDescription.replace("%data%",job.description);
+		$(".work-entry:last").append(employer + title + dates + location + description);
+	});
+}
+
+displayWork();
+
+projects.display();
+
+
+$(document).click(function(loc) {
+	logClicks(loc.pageX, loc.pageY);
+})
+
+$("#main").append(internationalizeButton);
+
+function inName(name) {
+	var nameArray = name.split(" ");
+	nameArray[1] = nameArray[1].toUpperCase();
+	nameArray[0] = nameArray[0].charAt(0).toUpperCase() + nameArray[0].slice(1,nameArray[0].length).toLowerCase();
+	return nameArray.join(" ");
+}
