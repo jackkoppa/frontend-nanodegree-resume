@@ -3,7 +3,7 @@ var jsonResume = (function() {
     $.ajax({
         'async': false,
         'global': false,
-        'url': "./currentResume.json",
+        'url': "./resume-data/resume.json",
         'dataType': "json",
         'success': function (data) {
             json = data;
@@ -22,7 +22,7 @@ work.display = function() {
 		$("#workExperience").append(HTMLworkStart);
 		var employer = HTMLworkEmployer.replace("%data%",job.employer);
 		var title = HTMLworkTitle.replace("%data%",job.title);
-		var dates = HTMLworkDates.replace("%data%",job.dates);
+		// var dates = HTMLworkDates.replace("%data%",job.dates);
 		var location = HTMLworkLocation.replace("%data%",job.location);
 		var description = HTMLworkDescription.replace("%data%",job.description);
 		$(".work-entry:last").append(employer + title + dates + location + description);
