@@ -1,0 +1,94 @@
+{
+	"work" : {
+		"jobs": [{
+			"employer": "Self-Employed",
+			"title": "Web Developer",
+			"location": "Milwaukee, WI, US",
+			"dates": {
+				"startMonth": 02,
+				"startYear": 2017,
+				"endMonth": null,
+				"endYear": null
+			},
+			"currentJob": true,
+			"description": "Freelance web developer on a variety of projects, covering front-end development, design, and content management. Heavy use of WordPress, providing clients with sites from scratch, theme customization, and additional functionality. Especially focused on high-quality companies working in clean technology or environmental policy, where field-specific knowledge & marketing experience can be best utilized for environmental change."
+		},
+		{
+			"employer": "Embark China",
+			"title": "Web Developer",
+			"location": "Milwaukee, WI, US",
+			"dates": "Feb 2017 - present",
+			"description": "description"
+		}]
+	},
+	"projects": {
+		"projects": [{
+			"title": "Chanje",
+			"dates": "Jan 2016 - Feb 2017",
+			"description": "test",
+			"images" : [
+				"img/chanje1.jpg",
+				"img/chanje2.jpg"
+			]
+		},{
+			"title": "Chanje",
+			"dates": "Jan 2016 - Feb 2017",
+			"description": "test",
+			"images" : [
+				"img/chanje1.jpg",
+				"img/chanje2.jpg"
+			]
+		}]
+	},
+	"bio": {
+		"name": "Jack Koppa",
+		"role": "Web Developer | Cleantech Advocate",
+		"welcomeMessage": "Hi - I make things with a purpose.",
+		"biopic": "img/jack_koppa_profile.jpg",
+		"contacts": {
+			"mobile": "+1 650-761-1414",
+			"email": "hello@jackkoppa.com",
+			"github": "jackkoppa",
+			"twitter": "jackpkoppa",
+			"linkedin": "jackkoppa",
+			"location": "Milwaukee, WI, US"
+		},
+		"skills": [
+			"HTML",
+			"CSS",
+			"JavaScript",
+			"WordPress",
+			"PHP",
+			"MySQL",
+			"SCSS",
+			"Grunt",
+			"Backbone.js",
+			"React.js"
+		]
+	},
+	"education": {
+		"schools": [{
+			"name": "University of Southern California",
+			"city": "Los Angeles, CA, US",
+			"degree": "BA",
+			"major": ["Environmental Studies","Chinese"],
+			"minor": ["Digital Studies"],
+			"dates": "Aug 2012 - May 2016",
+			"url": "https://dornsife.usc.edu/"
+		},
+		{
+			"name": "Capital Normal University",
+			"city": "Beijing, China",
+			"degree": "Study Abroad",
+			"major": ["Chinese Language"],
+			"dates": "May 2014 - July 2014",
+			"url": "https://dornsife.usc.edu/ealc/beijing-program/"
+		}],
+		"onlineCourses": [{
+			"title": "Front-End Web Developer Nanodegree",
+			"school": "Udacity",
+			"dates": "Jan 2016 - present",
+			"url": "https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001"
+		}]
+	}
+}
