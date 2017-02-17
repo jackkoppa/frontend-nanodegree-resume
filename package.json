@@ -1,0 +1,28 @@
+{
+  "name": "frontend-nanodegree-resume",
+  "version": "1.0.0",
+  "description": "Resume project for the Udacity Front-End Nanodegree program",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackkoppa/frontend-nanodegree-resume.git"
+  },
+  "author": "Jack Koppa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jackkoppa/frontend-nanodegree-resume/issues"
+  },
+  "homepage": "https://github.com/jackkoppa/frontend-nanodegree-resume#readme",
+  "devDependencies": {
+    "grunt": "~1.0.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "~1.1.0",
+    "grunt-contrib-sass": "~1.0.0",
+    "grunt-contrib-uglify": "~2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-postcss": "^0.8.0",
+    "autoprefixer": "^6.7.3",
+    "grunt-responsive-images": "~1.10.1"
+  }
+}
