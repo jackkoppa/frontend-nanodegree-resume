@@ -23,7 +23,7 @@ work.display = function() {
 		var employer = HTMLworkEmployer.replace("%data%",job.employer);
 		var title = HTMLworkTitle.replace("%data%",job.title);
 		// Other implementations may use dateObj in the future
-		var dates = job.dateString ? HTMLworkDates.replace("%data%",job.dateString) : "";
+		var dates = job.date.string ? HTMLworkDates.replace("%data%",job.date.string) : "";
 		var location = HTMLworkLocation.replace("%data%",job.location);
 		var description = HTMLworkDescription.replace("%data%",job.description);
 		$(".work-entry:last").append(employer + title + dates + location + description);
