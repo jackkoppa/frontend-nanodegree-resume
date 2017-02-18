@@ -17,13 +17,29 @@ var education = jsonResume.education;
 var work = jsonResume.work;
 var projects = jsonResume.projects;
 
+// format date from date objects; takes 2 arguments
+function formatDate(rawDate,shortForm = true) {
+    if (rawDate) {
+        var monthsShort = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        var monthsLong = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var msg = "";
+        var monthArray = shortForm ? monthsShort : monthsLong;
+        msg = monthsArray[rawDate.startMonth + 1] + " " + rawDate.startYear;
+        if (rawDate.startMonth !== rawDate.endMonth && rawDate.startYear !== rawDate.endYear) {
+            msg += rawDate.endMonth ? " - " + monthsArray[rawDate.endMonth] + " " + rawDate.endYear;
+        }
+        return msg;
+    } else {
+        return false;
+    }
+}
+
 work.display = function() {
 	work.jobs.forEach(function importWork(job) {
 		$("#workExperience").append(HTMLworkStart);
 		var employer = HTMLworkEmployer.replace("%data%",job.employer);
 		var title = HTMLworkTitle.replace("%data%",job.title);
-		// Other implementations may use dateObj in the future
-		var dates = job.date.string ? HTMLworkDates.replace("%data%",job.date.string) : "";
+		var dates = formatDate(job.date) ? HTMLworkDates.replace("%data%",formatDate(job.date)) : "";
 		var location = HTMLworkLocation.replace("%data%",job.location);
 		var description = HTMLworkDescription.replace("%data%",job.description);
 		$(".work-entry:last").append(employer + title + dates + location + description);
@@ -34,21 +50,19 @@ projects.display = function() {
 	this.projects.forEach(function(project) {
 		$("#projects").append(HTMLprojectStart);
 		var title = HTMLprojectTitle.replace("%data%",project.title);
-		var dates = HTMLprojectDates.replace("%data%",project.dates);
-		var description = HTMLprojectDescription.replace("%data%",project.description);
-		var imagesURL = [];
+        var dates = formatDate(project.date) ? HTMLworkDates.replace("%data%",formatDate(project.date)) : "";
+		var description = HTMLprojectDescription.replace("%data%",project.description.short);
+		var images = [];
 		project.images.forEach(function(url) {
-			imagesURL.push(HTMLprojectImage.replace("%data%",url));
+			images.push(HTMLprojectImage.replace("%data%",url));
 		});
-		$(".project-entry:last").append(title + dates + description + imagesURL.join(""));
+		$(".project-entry:last").append(title + dates + description + images.join(""));
 	});
 }
 
+
 work.display();
 projects.display();
-
-$("#header").append(HTMLheaderName.replace("%data%",bio.name));
-$("#header").append(HTMLheaderRole.replace("%data%",bio.role));
 
 
 if (bio.skills.length > 0) {
