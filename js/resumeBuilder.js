@@ -48,12 +48,23 @@ bio.displayHeader = function() {
 
 }
 
-bio.displayContacts = function() {
+bio.display = function() {
+    $("#header").prepend(HTMLheaderRole.replace("%data%",this.role));
+    $("#header").prepend(HTMLheaderName.replace("%data%",this.name));
+
     for (var contact in this.contacts) {
         if (this.contacts.hasOwnProperty(contact)) {
-            $("#footerContacts").append(HTMLcontactGeneric.replace("%contact%",contact).replace("%data%",this.contacts[contact]));
+            // using bio's appendContacts method, passing in desired element
+            // & the prop that should be used (current `contact`)
+            this.appendContacts("#topContacts",contact);
+            this.appendContacts("#footerContacts",contact);
         }
     }
+}
+
+bio.appendContacts = function(jqueryString,prop) {
+    console.log(this);
+    $(jqueryString).append(HTMLcontactGeneric.replace("%contact%",prop).replace("%data%",this.contacts[prop]));
 }
 
 work.display = function() {
@@ -93,9 +104,9 @@ projects.display = function() {
 }
 
 
+bio.display();
 work.display();
 projects.display();
-bio.displayContacts();
 
 
 if (bio.skills.length > 0) {
