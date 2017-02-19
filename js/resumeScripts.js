@@ -1,9 +1,13 @@
 // Maximum number of items to display
 // Jobs
 var maxJobs = 4;
-// Projects
+// Project
 var maxProjects = 4;
-var maxProjectImgs = 4;;var resume = resume || {};
+var maxProjectImgs = 4;
+
+// Using normal or responsive image directory
+// (currently not configured for responsive images)
+var responsiveImgs = false;;var resume = resume || {};
 resume["data"] = {
   "work": {
     "jobs": [
@@ -134,7 +138,7 @@ resume["data"] = {
           "short": "Commercial electric vehicle company launching their product line, and needed a professional, modern site to explain mission, team, and upcoming product line. Worked with Chanje's marketing team according to rough design guidelines, picked Zephyr WordPress theme as a base, and created Home, About, Team, Impact, Purpose, and Contact pages, as well as a Product template and form integration for customers to make vehicle reservations. Continuing to work with Chanje as functionality and available models increase, focusing on conveying the message of low-emission vehicles for the commercial market.",
           "long": null
         },
-        "imageDir": "chanje",
+        "imgDir": "chanje",
         "images": [
           "chanje_home.jpg",
           "chanje_models.jpg",
@@ -174,7 +178,7 @@ resume["data"] = {
             "The last aspect of the work was training the in-house marketing specialist to handle future updates. Peter had some web design experience previously, but was able to quickly pick up the basics of server-database-dashboard, the various essential files for a WordPress theme, and the flow of information that determines what displays on each important page. With this training, Peter has been able to continue making updates to the site, upper management is very excited to be free of an outside agency that wasn’t working for them, and most importantly, inquiries through the site have increased 200% at this point."
           ]
         },
-        "imageDir": "power_test",
+        "imgDir": "power_test",
         "images": [
           "power_test_industries.jpg",
           "power_test_contact.jpg",
@@ -220,7 +224,7 @@ resume["data"] = {
             "(PixBox is currently still private, but if you would like to view the app itself, please don’t hesitate to get in touch, and I’d be happy to provide a link/code samples)"
           ]
         },
-        "imageDir": "pixbox",
+        "imgDir": "pixbox",
         "images": [
           "pixbox_album.jpg",
           "pixbox_dashboard.jpg",
@@ -255,7 +259,7 @@ resume["data"] = {
             "Surfing the internet’s tides of opinions and information can be particularly difficult when researching a topic with limited time. FrackMented provides a template for dissecting some of the major present day policy issues we face, in a way that can inform and liberate voters."
           ]
         },
-        "imageDir": "frackmented",
+        "imgDir": "frackmented",
         "images": [
           "frackmented_landing.jpg",
           "frackmented_layout1.jpg",
@@ -293,7 +297,7 @@ resume["data"] = {
             "These updates have proved quite successful: since that Summer of 2013, up to May 2016, we have had over 80 trips, have 2,000+ email subscribers, and over 1,500 followers on Facebook. Perhaps most impressively, in 2016 Peaks and Professors was named USC's Student Organization of the Year, out of 800+ clubs. The most consistent comment from people who have signed up for the club? “I love the website!”"
           ]
         },
-        "imageDir": "peaks_and_professors",
+        "imgDir": "peaks_and_professors",
         "images": [
           "peaks_and_professors_dashboard.jpg",
           "peaks_and_professors_individual_trips.jpg",
@@ -627,12 +631,12 @@ resume.data = (function() {
     return json;
 })();
 */
-
-
 var bio = resume.data.bio;
 var education = resume.data.education;
 var work = resume.data.work;
 var projects = resume.data.projects;
+
+var imgDir = responsiveImgs ? 'resume-data/img_responsive' : 'resume-data/img';
 
 // format date from date objects; takes 2 arguments
 function formatDate(rawDate,shortForm = true) {
@@ -654,41 +658,51 @@ function formatDate(rawDate,shortForm = true) {
 bio.displayContacts = function() {
     for (var contact in this.contacts) {
         if (this.contacts.hasOwnProperty(contact)) {
-            $("#footerContacts").append(HTMLcontactGeneric.replace("%contact%",contact).replace("%data%",contacts[contact]));
+            $("#footerContacts").append(HTMLcontactGeneric.replace("%contact%",contact).replace("%data%",this.contacts[contact]));
         }
     }
 }
 
 work.display = function() {
-	work.jobs.forEach(function importWork(job) {
+	this.jobs.some(function importWork(job, index) {
 		$("#workExperience").append(HTMLworkStart);
 		var employer = HTMLworkEmployer.replace("%data%",job.employer);
 		var title = HTMLworkTitle.replace("%data%",job.title);
+        // only add date if it exists
 		var dates = formatDate(job.date) ? HTMLworkDates.replace("%data%",formatDate(job.date)) : "";
 		var location = HTMLworkLocation.replace("%data%",job.location);
 		var description = HTMLworkDescription.replace("%data%",job.description);
 		$(".work-entry:last").append(employer + title + dates + location + description);
+        // When the number of jobs that have been appended is equal to the maxJobs set in config.js,
+        // the this.jobs.some() method will stop
+        return index + 1 >= maxJobs;
 	});
 }
 
 projects.display = function() {
-	this.projects.forEach(function(project) {
+	this.projects.some(function(project, index) {
 		$("#projects").append(HTMLprojectStart);
 		var title = HTMLprojectTitle.replace("%data%",project.title);
+        // Only add date if it exists
         var dates = formatDate(project.date) ? HTMLworkDates.replace("%data%",formatDate(project.date)) : "";
         // Using the short description for projects
 		var description = HTMLprojectDescription.replace("%data%",project.description.short);
 		var images = [];
-		project.images.forEach(function(url) {
-			images.push(HTMLprojectImage.replace("%data%",url));
+		project.images.some(function(url, index) {
+			images.push(HTMLprojectImage.replace("%data%",imgDir + "/" + project.imgDir + "/" + url));
+            return index + 1 >= maxProjectImgs;
 		});
 		$(".project-entry:last").append(title + dates + description + images.join(""));
+        // When the number of projects that have been appended is equal to the maxProjects set in config.js,
+        // the this.projects.some() method will stop
+        return index + 1 >= maxProjects;
 	});
 }
 
 
 work.display();
 projects.display();
+bio.displayContacts();
 
 
 if (bio.skills.length > 0) {

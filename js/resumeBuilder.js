@@ -20,12 +20,12 @@ resume.data = (function() {
     return json;
 })();
 */
-
-
 var bio = resume.data.bio;
 var education = resume.data.education;
 var work = resume.data.work;
 var projects = resume.data.projects;
+
+var imgDir = responsiveImgs ? 'resume-data/img_responsive' : 'resume-data/img';
 
 // format date from date objects; takes 2 arguments
 function formatDate(rawDate,shortForm = true) {
@@ -47,41 +47,51 @@ function formatDate(rawDate,shortForm = true) {
 bio.displayContacts = function() {
     for (var contact in this.contacts) {
         if (this.contacts.hasOwnProperty(contact)) {
-            $("#footerContacts").append(HTMLcontactGeneric.replace("%contact%",contact).replace("%data%",contacts[contact]));
+            $("#footerContacts").append(HTMLcontactGeneric.replace("%contact%",contact).replace("%data%",this.contacts[contact]));
         }
     }
 }
 
 work.display = function() {
-	work.jobs.forEach(function importWork(job) {
+	this.jobs.some(function importWork(job, index) {
 		$("#workExperience").append(HTMLworkStart);
 		var employer = HTMLworkEmployer.replace("%data%",job.employer);
 		var title = HTMLworkTitle.replace("%data%",job.title);
+        // only add date if it exists
 		var dates = formatDate(job.date) ? HTMLworkDates.replace("%data%",formatDate(job.date)) : "";
 		var location = HTMLworkLocation.replace("%data%",job.location);
 		var description = HTMLworkDescription.replace("%data%",job.description);
 		$(".work-entry:last").append(employer + title + dates + location + description);
+        // When the number of jobs that have been appended is equal to the maxJobs set in config.js,
+        // the this.jobs.some() method will stop
+        return index + 1 >= maxJobs;
 	});
 }
 
 projects.display = function() {
-	this.projects.forEach(function(project) {
+	this.projects.some(function(project, index) {
 		$("#projects").append(HTMLprojectStart);
 		var title = HTMLprojectTitle.replace("%data%",project.title);
+        // Only add date if it exists
         var dates = formatDate(project.date) ? HTMLworkDates.replace("%data%",formatDate(project.date)) : "";
         // Using the short description for projects
 		var description = HTMLprojectDescription.replace("%data%",project.description.short);
 		var images = [];
-		project.images.forEach(function(url) {
-			images.push(HTMLprojectImage.replace("%data%",url));
+		project.images.some(function(url, index) {
+			images.push(HTMLprojectImage.replace("%data%",imgDir + "/" + project.imgDir + "/" + url));
+            return index + 1 >= maxProjectImgs;
 		});
 		$(".project-entry:last").append(title + dates + description + images.join(""));
+        // When the number of projects that have been appended is equal to the maxProjects set in config.js,
+        // the this.projects.some() method will stop
+        return index + 1 >= maxProjects;
 	});
 }
 
 
 work.display();
 projects.display();
+bio.displayContacts();
 
 
 if (bio.skills.length > 0) {
