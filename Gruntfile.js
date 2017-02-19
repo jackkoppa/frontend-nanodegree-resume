@@ -31,12 +31,26 @@ module.exports = function(grunt) {
             }
         },
 
+        concat: {
+            options: {
+                separator: ';',
+            },
+            dist: {
+                src: ['js/config.js', 'resume-data/resume.js', 'js/helper.js', 'js/resumeBuilder.js'],
+                dest: 'js/resumeScripts.js',
+            },
+        },
+
         watch: {
             refresh: {
                 options: {
                     livereload: true
                 },
-                files: ['index.html','js/resumeBuilder.js','css/*.css']
+                files: ['index.html','js/*.js','css/*.css']
+            },
+            js: {
+                tasks: ['concat'],
+                files: ['js/*.js']
             }
         },
 
@@ -56,12 +70,13 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-postcss');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-responsive-images');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
 
-    grunt.registerTask('default', ['sass','postcss','clean','responsive_images','copy']);
+    grunt.registerTask('default', ['sass','postcss','concat','clean','responsive_images','copy']);
     grunt.registerTask('serve', ['connect:livereload','watch']);
 };

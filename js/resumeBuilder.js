@@ -1,4 +1,12 @@
-var jsonResume = (function() {
+/*
+An implementation of this project drawing from a centralized JSON feed would use something like
+the following AJAX call to pull in resume.json data. This project, though, makes use of the
+`grunt compileJS` function in the `resume-data` repo, which will output a resume.js file.
+resume.js is then directly concatenated into resumeScripts.js file, so it's accessible below.
+*/
+/*
+var resume = {}
+resume.data = (function() {
     var json = null;
     $.ajax({
         'async': false,
@@ -11,11 +19,13 @@ var jsonResume = (function() {
     });
     return json;
 })();
+*/
 
-var bio = jsonResume.bio;
-var education = jsonResume.education;
-var work = jsonResume.work;
-var projects = jsonResume.projects;
+
+var bio = resume.data.bio;
+var education = resume.data.education;
+var work = resume.data.work;
+var projects = resume.data.projects;
 
 // format date from date objects; takes 2 arguments
 function formatDate(rawDate,shortForm = true) {
@@ -23,14 +33,22 @@ function formatDate(rawDate,shortForm = true) {
         var monthsShort = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
         var monthsLong = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         var msg = "";
-        var monthArray = shortForm ? monthsShort : monthsLong;
+        var monthsArray = shortForm ? monthsShort : monthsLong;
         msg = monthsArray[rawDate.startMonth + 1] + " " + rawDate.startYear;
         if (rawDate.startMonth !== rawDate.endMonth && rawDate.startYear !== rawDate.endYear) {
-            msg += rawDate.endMonth ? " - " + monthsArray[rawDate.endMonth] + " " + rawDate.endYear;
+            msg += rawDate.endMonth ? " - " + monthsArray[rawDate.endMonth] + " " + rawDate.endYear : "";
         }
         return msg;
     } else {
         return false;
+    }
+}
+
+bio.displayContacts = function() {
+    for (var contact in this.contacts) {
+        if (this.contacts.hasOwnProperty(contact)) {
+            $("#footerContacts").append(HTMLcontactGeneric.replace("%contact%",contact).replace("%data%",contacts[contact]));
+        }
     }
 }
 
@@ -51,6 +69,7 @@ projects.display = function() {
 		$("#projects").append(HTMLprojectStart);
 		var title = HTMLprojectTitle.replace("%data%",project.title);
         var dates = formatDate(project.date) ? HTMLworkDates.replace("%data%",formatDate(project.date)) : "";
+        // Using the short description for projects
 		var description = HTMLprojectDescription.replace("%data%",project.description.short);
 		var images = [];
 		project.images.forEach(function(url) {
