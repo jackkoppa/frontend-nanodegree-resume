@@ -44,6 +44,10 @@ function formatDate(rawDate,shortForm = true) {
     }
 }
 
+bio.displayHeader = function() {
+
+}
+
 bio.displayContacts = function() {
     for (var contact in this.contacts) {
         if (this.contacts.hasOwnProperty(contact)) {
@@ -58,7 +62,7 @@ work.display = function() {
 		var employer = HTMLworkEmployer.replace("%data%",job.employer);
 		var title = HTMLworkTitle.replace("%data%",job.title);
         // only add date if it exists
-		var dates = formatDate(job.date) ? HTMLworkDates.replace("%data%",formatDate(job.date)) : "";
+		var dates = formatDate(job.dates) ? HTMLworkDates.replace("%data%",formatDate(job.dates)) : "";
 		var location = HTMLworkLocation.replace("%data%",job.location);
 		var description = HTMLworkDescription.replace("%data%",job.description);
 		$(".work-entry:last").append(employer + title + dates + location + description);
@@ -73,7 +77,7 @@ projects.display = function() {
 		$("#projects").append(HTMLprojectStart);
 		var title = HTMLprojectTitle.replace("%data%",project.title);
         // Only add date if it exists
-        var dates = formatDate(project.date) ? HTMLworkDates.replace("%data%",formatDate(project.date)) : "";
+        var dates = formatDate(project.dates) ? HTMLworkDates.replace("%data%",formatDate(project.dates)) : "";
         // Using the short description for projects
 		var description = HTMLprojectDescription.replace("%data%",project.description.short);
 		var images = [];
