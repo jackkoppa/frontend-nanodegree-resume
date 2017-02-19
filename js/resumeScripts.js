@@ -12,8 +12,6 @@ resume["data"] = {
   "bio": {
     "name": "Jack Koppa",
     "role": "Web Developer | Cleantech Advocate",
-    "welcomeMessage": "Hi - I make things with a purpose.",
-    "biopic": "jack_koppa_profile.jpg",
     "contacts": {
       "mobile": "+1 650.761.1414",
       "email": "hello@jackkoppa.com",
@@ -22,6 +20,7 @@ resume["data"] = {
       "linkedin": "jackkoppa",
       "location": "Milwaukee, WI, US"
     },
+    "welcomeMessage": "Hi - I make things with a purpose.",
     "skills": [
       "HTML",
       "CSS",
@@ -32,7 +31,8 @@ resume["data"] = {
       "Sass",
       "React.js",
       "Backbone.js"
-    ]
+    ],
+    "biopic": "jack_koppa_profile.jpg"
   },
   "education": {
     "schools": [
@@ -92,7 +92,6 @@ resume["data"] = {
           "endMonth": null,
           "endYear": null
         },
-        "currentJob": true,
         "description": "Developing & designing client websites for a variety of purposes. Heavy focus on WordPress development, front-end technologies, and modern design. Work with clients at various points in their process: providing all design and development for sites from scratch, converting mock-ups to full-featured sites, or adding functionality/improving design for existing projects. Focused especially on companies in clean technology & environmental policy, where field-specific knowledge & marketing experience can be best utilized for environmental change.",
         "urls": [
           "http://jackkoppa.com"
