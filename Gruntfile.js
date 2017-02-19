@@ -4,13 +4,23 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         sass: {
-            dist: {
+            dev: {
                 options: {
                     style: 'expanded'
                 },
                 files: {
-                    'css/styles.css': 'scss/styles.scss',
-                    'css/base.css': 'scss/base.scss'
+                    'dev/css/styles.css': 'dev/scss/styles.scss',
+                    'dev/css/base.css': 'dev/scss/base.scss'
+                }
+            },
+
+            dist: {
+                options: {
+                    style: 'compressed'
+                },
+                files: {
+                    'dist/css/styles.css': 'dev/scss/styles.scss',
+                    'dist/css/base.css': 'dev/scss/base.scss'
                 }
             }
         },
@@ -19,15 +29,18 @@ module.exports = function(grunt) {
             options: {
                 map: {
                     inline: false,
-                    annotation: 'css/maps/'
+                    annotation: 'dev/css/maps/'
                 },
 
                 processors: [
-                    require('autoprefixer')({browsers: 'last 2 versions'}),
+                    require('autoprefixer')({browsers: 'last 2 versions'})
                 ]
             },
+            dev: {
+                src: 'dev/css/*.css'
+            },
             dist: {
-                src: 'css/*.css'
+                src: 'dist/css/*.css'
             }
         },
 
@@ -36,8 +49,19 @@ module.exports = function(grunt) {
                 separator: ';',
             },
             dist: {
-                src: ['js/config.js', 'resume-data/resume.js', 'js/helper.js', 'js/resumeBuilder.js'],
-                dest: 'js/resumeScripts.js',
+                src: ['dev/js/config.js', 'resume-data/resume.js', 'dev/js/helper.js', 'dev/js/resumeBuilder.js'],
+                dest: 'dist/js/resumeScripts.js',
+            },
+        },
+
+        copy: {
+            dev: {
+                files: [{
+                    expand: true,
+                    cwd: 'resume-data',
+                    src: 'resume.js',
+                    dest: 'dev/js/'
+                }]
             },
         },
 
@@ -46,37 +70,57 @@ module.exports = function(grunt) {
                 options: {
                     livereload: true
                 },
-                files: ['index.html','js/*.js','css/*.css']
+                files: ['dev/index.html','dev/js/*.js','dev/css/*.css']
             },
-            js: {
+            dist: {
                 tasks: ['concat'],
                 files: ['js/*.js']
             }
+
         },
 
         connect: {
-            options: {
-                port: 9000,
-                hostname: 'localhost',
-                livereload: 35729
-            },
-            livereload: {
+            dev: {
                 options: {
-                    open: true,
+                    port: 9000,
+                    hostname: 'localhost',
+                    base: 'dev',
+                    livereload: 35729
+                },
+                livereload: {
+                    options: {
+                        open: true,
+                    }
+                }
+            },
+            dist: {
+                options: {
+                    port: 9000,
+                    hostname: 'localhost',
+                    base: 'dist',
+                    livereload: 35729
+                },
+                livereload: {
+                    options: {
+                        open: true,
+                    }
                 }
             }
+
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-postcss');
+    // grunt.loadNpmTasks('grunt-contrib-sass');
+    // grunt.loadNpmTasks('grunt-postcss');
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-responsive-images');
+    // grunt.loadNpmTasks('grunt-contrib-clean');
+    // grunt.loadNpmTasks('grunt-responsive-images');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
 
     grunt.registerTask('default', ['sass','postcss','concat','clean','responsive_images','copy']);
-    grunt.registerTask('serve', ['connect:livereload','watch']);
+    grunt.registerTask('serveDev', ['copy:dev','connect:dev:livereload','watch:refresh']);
+    grunt.registerTask('serveDist', ['connect:dist:livereload','watch:refresh','watch:dist']);
+
 };
