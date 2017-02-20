@@ -4,12 +4,20 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         copy: {
-            dev: {
+            resume: {
                 files: [{
                     expand: true,
                     cwd: 'resume-data',
                     src: 'resume.js',
                     dest: 'dev/js/'
+                }]
+            },
+            jquery: {
+                files: [{
+                    expand: true,
+                    cwd: 'dev/js',
+                    src: 'jquery-3.1.1.min.js',
+                    dest: 'dist/js/'
                 }]
             }
         },
@@ -28,7 +36,7 @@ module.exports = function(grunt) {
                 }]
             },
 
-            dist: {
+            prod: {
                 options: {
                     style: 'compressed'
                 },
@@ -52,7 +60,7 @@ module.exports = function(grunt) {
                 },
                 src: 'dev/css/*.css'
             },
-            dist: {
+            prod: {
                 options: {
                     map: false,
 
@@ -68,58 +76,69 @@ module.exports = function(grunt) {
 
         concat: {
             options: {
-                separator: ';',
+                separator: '\n',
             },
-            dist: {
-                src: ['dev/js/config.js', 'resume-data/resume.js', 'dev/js/helper.js', 'dev/js/resumeBuilder.js'],
-                dest: 'dist/js/resumeScripts.js',
+            dev: {
+                src: ['dev/es2015/config.js', 'resume-data/resume.js', 'dev/es2015/helper.js', 'dev/es2015/resumeBuilder.js'],
+                dest: 'dev/es2015/resumeScripts.js',
             },
         },
 
+        babel: {
+            options: {
+                sourceMap: true,
+                presets: ['env']
+            },
+            dev: {
+                files: [{
+                    expand: true,
+                    cwd: 'dev/es2015',
+                    src: ['*.js'],
+                    dest: 'dev/js',
+                    ext: '.js'
+                }]
+            }
+        },
+
         uglify: {
-            dist: {
+            options: {
+                mangle: {
+                    except: ['$']
+                },
+                compress: {
+                    drop_console: true
+                }
+            },
+            prod: {
                 files: {
-                    'dist/resumeScripts.min.js': [
-                        'dev/js/config.js',
-                        'resume-data/resume.js',
-                        'dev/js/helper.js',
-                        'dev/js/resumeBuilder.js'
-                    ]
+                    'dist/js/resumeScripts.min.js': ['dev/js/resumeScripts.js']
                 }
             }
+        },
+
+        jshint: {
+            options: {
+                globals: {
+                    "$": true,
+                    "google": true
+                },
+                browser: true,
+                devel: true,
+                sub: true,
+                strict: "global"
+            },
+            dev: ['dev/js/resumeScripts.js']
         },
 
         processhtml: {
             options: {
             },
 
-            dist: {
+            prod: {
                 files: {
                     'dist/index.html': ['dev/index.html']
                 }
             }
-        },
-
-        watch: {
-            scssDev: {
-                tasks: ['sass:dev','postcss:dev'],
-                files: ['dev/scss/*.scss']
-            },
-            scssDist: {
-                tasks: ['sass:dist','postcss:dist','processhtml'],
-                files: ['dev/scss/*.scss']
-            },
-            jsDist: {
-                tasks: ['uglify','processhtml'],
-                files: ['dev/js/*.js']
-            },
-            refresh: {
-                options: {
-                    livereload: true
-                },
-                files: ['dev/index.html','dev/js/*.js','dev/css/*.css']
-            },
-
         },
 
         connect: {
@@ -136,7 +155,7 @@ module.exports = function(grunt) {
                     }
                 }
             },
-            dist: {
+            prod: {
                 options: {
                     port: 8090,
                     hostname: 'localhost',
@@ -149,12 +168,69 @@ module.exports = function(grunt) {
                     }
                 }
             }
-
         }
+    });
+
+    /*
+    configuring watch dynamically, so that multiple watch tasks can be set for
+    dev & prod, separately
+    */
+    // watch task (livereload) common to all watch instances
+    grunt.config.merge({
+        watch: {
+            options: {
+                livereload: true
+            },
+            refresh: {
+                files: ['dev/index.html','dev/js/*.js','dev/css/*.css']
+            }
+        }
+    });
+
+    // watch for dev server
+    grunt.registerTask('watchDev', function () {
+        grunt.config.merge({
+            watch: {
+                devJS: {
+                    files: 'dev/es2015/*.js',
+                    tasks: ['concat','babel','jshint']
+                },
+                devSCSS: {
+                    files: ['dev/scss/*.scss'],
+                    tasks: ['sass:dev','postcss:dev']
+                }
+            }
+        });
+
+        grunt.task.run('watch');
+    });
+
+    // watch for prod server
+    grunt.registerTask('watchProd', function () {
+        grunt.config.merge({
+            watch: {
+                prodJS: {
+                    files: 'dev/es2015/*.js',
+                    tasks: ['concat','babel','jshint','uglify']
+                },
+                prodSCSS: {
+                    files: ['dev/scss/*.scss'],
+                    tasks: ['sass:prod','postcss:prod']
+                },
+                prodHTML: {
+                    files: 'dev/index.html',
+                    tasks: ['processhtml']
+                }
+            }
+        });
+
+        grunt.task.run('watch');
     });
 
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-postcss');
+    grunt.loadNpmTasks('grunt-babel');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     // grunt.loadNpmTasks('grunt-contrib-clean');
@@ -164,8 +240,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-processhtml');
 
-    grunt.registerTask('default', ['sass','postcss','concat','clean','responsive_images','copy']);
-    grunt.registerTask('serveDev', ['copy:dev','sass:dev','postcss:dev','connect:dev','watch:scssDev','watch:refresh']);
-    grunt.registerTask('serveDist', ['sass:dist','postcss:dist','uglify','processhtml','connect:dist:livereload','watch:scssDist','watch:jsDist','watch:refresh']);
+    grunt.registerTask('default', ['copy','sass','postcss','concat','babel','uglify','jshint','processhtml']);
+    grunt.registerTask('serveDev', ['copy:resume','sass:dev','postcss:dev','concat','babel','jshint','connect:dev','watchDev']);
+    grunt.registerTask('serveProd', ['copy','sass:prod','postcss:prod','concat','babel','uglify','jshint','processhtml','connect:prod','watchProd']);
 
 };

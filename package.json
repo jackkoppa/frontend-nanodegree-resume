@@ -14,8 +14,10 @@
   "homepage": "https://github.com/jackkoppa/frontend-nanodegree-resume#readme",
   "devDependencies": {
     "autoprefixer": "^6.7.3",
+    "babel-preset-env": "^1.1.8",
     "cssnano": "^3.10.0",
     "grunt": "~1.0.0",
+    "grunt-babel": "^6.0.0",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-connect": "^1.0.2",

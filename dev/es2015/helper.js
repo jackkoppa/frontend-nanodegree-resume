@@ -1,5 +1,3 @@
-'use strict';
-
 var HTMLheaderName = '<h1 id="name">%data%</h1>';
 var HTMLheaderRole = '<span>%data%</span><hr>';
 
@@ -47,10 +45,10 @@ var internationalizeButton = '<button>Internationalize</button>';
 var googleMap = '<div id="map"></div>';
 
 // Internationalize
-$(document).ready(function () {
-    $('button').click(function () {
+$(document).ready(function() {
+    $('button').click(function() {
         var $name = $('#name');
-        var iName = inName($name.text()) || function () {};
+        var iName = inName($name.text()) || function(){};
         $name.html(iName);
     });
 });
@@ -58,16 +56,20 @@ $(document).ready(function () {
 // Click locations
 var clickLocations = [];
 
-function logClicks(x, y) {
-    clickLocations.push({
-        x: x,
-        y: y
-    });
+function logClicks(x,y) {
+    clickLocations.push(
+        {
+            x: x,
+            y: y
+        }
+    );
     console.log('x location: ' + x + '; y location: ' + y);
 }
 
+
+
 // Map
-var map; // declares a global map variable
+var map;    // declares a global map variable
 
 
 /*
@@ -87,6 +89,7 @@ function initializeMap() {
     */
     map = new google.maps.Map(document.querySelector('#map'), mapOptions);
 
+
     /*
     locationFinder() returns an array of every location string from the JSONs
     written for bio, education, and work.
@@ -103,7 +106,7 @@ function initializeMap() {
         // the locations array. Note that forEach is used for array iteration
         // as described in the Udacity FEND Style Guide:
         // https://udacity.github.io/frontend-nanodegree-styleguide/javascript.html#for-in-loop
-        education.schools.forEach(function (school) {
+        education.schools.forEach(function(school){
             locations.push(school.location);
         });
 
@@ -111,7 +114,7 @@ function initializeMap() {
         // the locations array. Note that forEach is used for array iteration
         // as described in the Udacity FEND Style Guide:
         // https://udacity.github.io/frontend-nanodegree-styleguide/javascript.html#for-in-loop
-        work.jobs.forEach(function (job) {
+        work.jobs.forEach(function(job){
             locations.push(job.location);
         });
 
@@ -126,10 +129,10 @@ function initializeMap() {
     function createMapMarker(placeData) {
 
         // The next lines save location data from the search result object to local variables
-        var lat = placeData.geometry.location.lat(); // latitude from the place service
-        var lon = placeData.geometry.location.lng(); // longitude from the place service
-        var name = placeData.formatted_address; // name of the place from the place service
-        var bounds = window.mapBounds; // current boundaries of the map window
+        var lat = placeData.geometry.location.lat();  // latitude from the place service
+        var lon = placeData.geometry.location.lng();  // longitude from the place service
+        var name = placeData.formatted_address;   // name of the place from the place service
+        var bounds = window.mapBounds;            // current boundaries of the map window
 
         // marker is an object with additional data about the pin for a single location
         var marker = new google.maps.Marker({
@@ -146,7 +149,7 @@ function initializeMap() {
         });
 
         // hmmmm, I wonder what this is about...
-        google.maps.event.addListener(marker, 'click', function () {
+        google.maps.event.addListener(marker, 'click', function() {
             // your code goes here!
         });
 
@@ -180,7 +183,7 @@ function initializeMap() {
         var service = new google.maps.places.PlacesService(map);
 
         // Iterates through the array of locations, creates a search object for each location
-        locations.forEach(function (place) {
+            locations.forEach(function(place){
             // the search request object
             var request = {
                 query: place
@@ -201,6 +204,7 @@ function initializeMap() {
     // pinPoster(locations) creates pins on the map for each location in
     // the locations array
     pinPoster(locations);
+
 }
 
 /*
@@ -213,7 +217,6 @@ Uncomment the code below when you're ready to implement a Google Map!
 // Vanilla JS way to listen for resizing of the window
 // and adjust map bounds
 //window.addEventListener('resize', function(e) {
-//Make sure the map bounds get updated on page resize
+    //Make sure the map bounds get updated on page resize
 //  map.fitBounds(mapBounds);
 //});
-//# sourceMappingURL=helper.js.map
