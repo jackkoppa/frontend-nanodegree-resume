@@ -22,11 +22,13 @@ npm install
 ```
 
 to install the dev dependencies. After that, run one of the following Grunt tasks:
+
 1. to compile & lint files, for both development (`dev/`) & production (`dist/`) builds:
 
 ```shell
 grunt
 ```
+
 
 2. to compile, lint, & launch a livereloading server for the development build:
 
@@ -34,11 +36,13 @@ grunt
 grunt serveDev
 ```
 
+
 3. to compile, lint, & launch a livereloading server for the production build:
 
 ```shell
 grunt serveProd
 ```
+
 
 ## Notes
 The modular approach required a few deviations from the initial Udacity guidelines. Check out an explanation of those changes in [notes.md](notes.md).
