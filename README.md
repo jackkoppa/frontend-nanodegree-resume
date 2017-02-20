@@ -5,12 +5,14 @@ An assignment for Udacity's Front-End Web Developer Nanodegree. Forked from the 
 ## Getting Started
 ### Submodule Dependency
 In order to allow for future modular usage of resume data, the biographical JSON has been broken out into a separate repo. This repo depends upon that repo ([`resume-data`](https://github.com/jackkoppa/resume-data)) for its data and images. To make sure the submodule is included when you clone this repo, use the following modified clone command when starting:
-
-```git clone --recursive https://github.com/jackkoppa/frontend-nanodegree-resume```
+```shell
+git clone --recursive https://github.com/jackkoppa/frontend-nanodegree-resume
+```
 
 If you've already cloned `frontend-nanodegree-resume`, and find that `resume-data` is empty, you can update the dependency with the following command from the project root:
-
-```git submodule update --init --recursive```
+```shell
+git submodule update --init --recursive
+```
 
 More info in the [`resume-data` documentation](https://github.com/jackkoppa/resume-data#readme), and at this [GitHub article](https://github.com/blog/2104-working-with-submodules) on submodules.
 
