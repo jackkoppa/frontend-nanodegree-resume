@@ -13,14 +13,14 @@ jspm_packages
 # Optional npm cache directory
 .npm
 
-# directory for separate repository, containing resume JSON
-resume-data
-
 # distribution/production directory
 dist
 
 # temp. css files in development directory
 dev/css
+
+# temp. js files in development directory (all editing done in dev/es2015/)
+dev/js
 
 # sass log files
 .sass-cache
