@@ -17,17 +17,28 @@ More info in the [`resume-data` documentation](https://github.com/jackkoppa/resu
 ### npm
 After verifying the submodule, just 2 quick steps to get up & running. Run
 
-```npm install```
+```shell
+npm install
+```
 
 to install the dev dependencies. After that, run one of the following Grunt tasks:
 1. to compile & lint files, for both development (`dev/`) & production (`dist/`) builds:
-```grunt```
+
+```shell
+grunt
+```
 
 2. to compile, lint, & launch a livereloading server for the development build:
-```grunt serveDev```
+
+```shell
+grunt serveDev
+```
 
 3. to compile, lint, & launch a livereloading server for the production build:
-```grunt serveProd```
+
+```shell
+grunt serveProd
+```
 
 ## Notes
 The modular approach required a few deviations from the initial Udacity guidelines. Check out an explanation of those changes in [notes.md](notes.md).
