@@ -29,13 +29,13 @@ to install the dev dependencies. After that, run one of the following Grunt task
     ```
 
 
-* compile, lint, & launch a livereloading server for the development build:
+* compile, lint, & launch a livereloading server (`localhost:8000`) for the development build:
     ```shell
     grunt serveDev
     ```
 
 
-* to compile, lint, & launch a livereloading server for the production build:
+* compile, lint, & launch a livereloading server (`localhost:8080`) for the production build:
     ```shell
     grunt serveProd
     ```
