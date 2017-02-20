@@ -23,25 +23,22 @@ npm install
 
 to install the dev dependencies. After that, run one of the following Grunt tasks:
 
-1. to compile & lint files, for both development (`dev/`) & production (`dist/`) builds:
-
-```shell
-grunt
-```
-
-
-2. to compile, lint, & launch a livereloading server for the development build:
-
-```shell
-grunt serveDev
-```
+* compile & lint files, for both development (`dev/`) & production (`dist/`) builds:
+    ```shell
+    grunt
+    ```
 
 
-3. to compile, lint, & launch a livereloading server for the production build:
+* compile, lint, & launch a livereloading server for the development build:
+    ```shell
+    grunt serveDev
+    ```
 
-```shell
-grunt serveProd
-```
+
+* to compile, lint, & launch a livereloading server for the production build:
+    ```shell
+    grunt serveProd
+    ```
 
 
 ## Notes
