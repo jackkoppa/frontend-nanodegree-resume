@@ -1,0 +1,118 @@
+@import 'variables';
+@import 'mq';
+@import 'mixins';
+
+/* Typography & social icons font */
+@import 'typography';
+
+/* General element styling */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    color: $dark-grey;
+    font-family: 'Open Sans', Arial, sans-serif;
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1.2;
+    margin: 0;
+}
+
+// Running through all defined $font-sizes, including default media query font sizes
+/* Font sizes & media query font sizes */
+@each $breakpoint, $px in $mq-breakpoints {
+    @include mq($breakpoint) {
+        @each $key, $value in $font-sizes {
+            @if map-has-key($value, $breakpoint) {
+                $font-option: map-get($value, $breakpoint);
+                #{$key} { font-size: px2rem($font-option); }
+            }
+        }
+    }
+}
+
+a {
+    color: $secondary;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* Box Sizing & Padding Framework */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: px2rem(1200px);
+    padding: px2rem($gutter);
+    width: 100%;
+    @include mq(tablet) {
+        padding: px2rem($gutter-tablet);
+    }
+}
+
+.element {
+    padding: px2rem($gutter);
+    @include mq(tablet) {
+        padding: px2rem($gutter-tablet);
+    }
+}
+
+// xs, sm, md, lg, xl Box Sizing
+/* xs (base size) */
+@for $i from 1 through 12 {
+    .box-xs-#{$i} {
+        width: (100% / 12) * $i;
+    }
+}
+
+/* sm (mobile) */
+@include mq($from: mobile) {
+    @for $i from 1 through 12 {
+        .box-sm-#{$i} {
+            width: (100% / 12) * $i;
+        }
+    }
+}
+
+/* md (tablet) */
+@include mq($from: tablet) {
+    @for $i from 1 through 12 {
+        .box-md-#{$i} {
+            width: (100% / 12) * $i;
+        }
+    }
+}
+
+/* lg (laptop) */
+@include mq($from: desktop) {
+    @for $i from 1 through 12 {
+        .box-lg-#{$i} {
+            width: (100% / 12) * $i;
+        }
+    }
+}
+
+/* xl (desktop) */
+@include mq($from: wide) {
+    @for $i from 1 through 12 {
+        .box-xl-#{$i} {
+            width: (100% / 12) * $i;
+        }
+    }
+}

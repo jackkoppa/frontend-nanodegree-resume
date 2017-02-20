@@ -1,0 +1,38 @@
+// Media Query Breakpoints
+$mq-breakpoints: (
+	base: null,
+    mobile:  480px,
+    tablet:  640px,
+    desktop: 900px,
+    wide:    1200px
+) !default;
+
+// Typography
+$base-font-size: 16px !default;
+
+// Broken down into nested sass maps to define media query font sizes
+$font-sizes: (
+    h1: (base: 30px, mobile: 36px, tablet: 42px, desktop: 48px),
+    h2: (base: 24px, mobile: 30px, tablet: 36px),
+    h3: (base: 20px, mobile: 24px, tablet: 30px),
+    h4: (base: 18px, tablet: 24px),
+    h5: (base: 18px),
+    h6: (base: 12px),
+    p: (base: 16px),
+);
+
+// Colors
+$primary: #205686;
+$secondary: #2a7e72;
+$tertiary: #74625c;
+$white: #fff;
+$light-grey: #ddd;
+$dark-grey: #333;
+$black: #000;
+
+// Structure
+// Padding
+// currently keeping padding the same across devices
+$gutter: 10px;
+$gutter-tablet: 10px;
+

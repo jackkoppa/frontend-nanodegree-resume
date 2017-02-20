@@ -39,7 +39,6 @@ function formatDate(rawDate,shortForm = true) {
             msg += rawDate.endMonth ? " - " + monthsArray[rawDate.endMonth] + " " + rawDate.endYear : "";
         }
         return msg;
-
     } else {
         return false;
     }
@@ -73,7 +72,6 @@ bio.display = function() {
 }
 
 bio.appendContacts = function(jqueryString,prop) {
-    console.log(this);
     $(jqueryString).append(HTMLcontactGeneric.replace("%contact%",prop).replace("%data%",this.contacts[prop]));
 }
 

@@ -58,7 +58,9 @@ h3,
 h4,
 h5 {
   padding: 10px 5%;
+
 }
+
 
 .date-text {
   font-style: italic;
@@ -74,6 +76,7 @@ h5 {
   color: #999;
   line-height: 16px;
   float: right;
+
 }
 
 p {
@@ -130,24 +133,18 @@ a {
 }
 
 .flex-box {
-  display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
-  -ms-flex-direction: row;
-      flex-direction: row;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
   padding: 10px;
 }
 
 .flex-column {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: column;
-      flex-direction: column;
-  -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
+  flex-direction: column;
+  flex-wrap: nowrap;
   padding: 10px;
 }
 
@@ -179,29 +176,31 @@ span {
 }
 
 /* Media queries to handle various device widths */
+
 @media only screen and (max-width: 1024px) {
   #lets-connect {
     margin-top: 5%;
   }
 }
-@media only screen and (max-width: 900px) {
+
+@media only screen and (max-width:900px) {
   .biopic {
     width: 175px;
   }
 }
+
 @media only screen and (max-width: 750px) {
   #lets-connect {
     margin-top: 10%;
   }
-
   .biopic {
     width: 150px;
   }
-
   .welcome-message {
     display: none;
   }
 }
+
 #map {
   display: block;
   height: 100%;
@@ -220,5 +219,3 @@ span {
     display: block;
   }
 }
-
-/*# sourceMappingURL=maps/style.css.map */

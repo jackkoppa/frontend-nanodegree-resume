@@ -3,15 +3,29 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        copy: {
+            dev: {
+                files: [{
+                    expand: true,
+                    cwd: 'resume-data',
+                    src: 'resume.js',
+                    dest: 'dev/js/'
+                }]
+            }
+        },
+
         sass: {
             dev: {
                 options: {
                     style: 'expanded'
                 },
-                files: {
-                    'dev/css/styles.css': 'dev/scss/styles.scss',
-                    'dev/css/base.css': 'dev/scss/base.scss'
-                }
+                files: [{
+                    expand: true,
+                    cwd: 'dev/scss',
+                    src: ['*.scss'],
+                    dest: 'dev/css',
+                    ext: '.css'
+                }]
             },
 
             dist: {
@@ -19,27 +33,35 @@ module.exports = function(grunt) {
                     style: 'compressed'
                 },
                 files: {
-                    'dist/css/styles.css': 'dev/scss/styles.scss',
-                    'dist/css/base.css': 'dev/scss/base.scss'
+                    'dist/css/style.min.css': 'dev/scss/styleDist.scss'
                 }
             }
         },
 
         postcss: {
-            options: {
-                map: {
-                    inline: false,
-                    annotation: 'dev/css/maps/'
-                },
-
-                processors: [
-                    require('autoprefixer')({browsers: 'last 2 versions'})
-                ]
-            },
             dev: {
+                options: {
+                    map: {
+                        inline: false,
+                        annotation: 'dev/css/maps/'
+                    },
+
+                    processors: [
+                        require('autoprefixer')({browsers: 'last 2 versions'})
+                    ]
+                },
                 src: 'dev/css/*.css'
             },
             dist: {
+                options: {
+                    map: false,
+
+                    processors: [
+                        require('autoprefixer')({browsers: 'last 2 versions'})
+                        // if sass can handle minification, should uninstall cssnano
+                        // require('cssnano')(),
+                    ]
+                },
                 src: 'dist/css/*.css'
             }
         },
@@ -54,28 +76,49 @@ module.exports = function(grunt) {
             },
         },
 
-        copy: {
-            dev: {
-                files: [{
-                    expand: true,
-                    cwd: 'resume-data',
-                    src: 'resume.js',
-                    dest: 'dev/js/'
-                }]
+        uglify: {
+            dist: {
+                files: {
+                    'dist/resumeScripts.min.js': [
+                        'dev/js/config.js',
+                        'resume-data/resume.js',
+                        'dev/js/helper.js',
+                        'dev/js/resumeBuilder.js'
+                    ]
+                }
+            }
+        },
+
+        processhtml: {
+            options: {
             },
+
+            dist: {
+                files: {
+                    'dist/index.html': ['dev/index.html']
+                }
+            }
         },
 
         watch: {
+            scssDev: {
+                tasks: ['sass:dev','postcss:dev'],
+                files: ['dev/scss/*.scss']
+            },
+            scssDist: {
+                tasks: ['sass:dist','postcss:dist','processhtml'],
+                files: ['dev/scss/*.scss']
+            },
+            jsDist: {
+                tasks: ['uglify','processhtml'],
+                files: ['dev/js/*.js']
+            },
             refresh: {
                 options: {
                     livereload: true
                 },
                 files: ['dev/index.html','dev/js/*.js','dev/css/*.css']
             },
-            dist: {
-                tasks: ['concat'],
-                files: ['js/*.js']
-            }
 
         },
 
@@ -95,7 +138,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 options: {
-                    port: 9000,
+                    port: 8090,
                     hostname: 'localhost',
                     base: 'dist',
                     livereload: 35729
@@ -110,17 +153,19 @@ module.exports = function(grunt) {
         }
     });
 
-    // grunt.loadNpmTasks('grunt-contrib-sass');
-    // grunt.loadNpmTasks('grunt-postcss');
+    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-postcss');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     // grunt.loadNpmTasks('grunt-contrib-clean');
     // grunt.loadNpmTasks('grunt-responsive-images');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-processhtml');
 
     grunt.registerTask('default', ['sass','postcss','concat','clean','responsive_images','copy']);
-    grunt.registerTask('serveDev', ['copy:dev','connect:dev:livereload','watch:refresh']);
-    grunt.registerTask('serveDist', ['connect:dist:livereload','watch:refresh','watch:dist']);
+    grunt.registerTask('serveDev', ['copy:dev','sass:dev','postcss:dev','connect:dev','watch:scssDev','watch:refresh']);
+    grunt.registerTask('serveDist', ['sass:dist','postcss:dist','uglify','processhtml','connect:dist:livereload','watch:scssDist','watch:jsDist','watch:refresh']);
 
 };
