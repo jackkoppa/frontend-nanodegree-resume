@@ -32,8 +32,14 @@ var projects = resume.data.projects;
 bio.display = function() {
     $("#banner-wrapper").append(template.img
         .replace("%srcset%",imgSrcSet(imgDir + this.headerpic,[480,640,900,1200,1800]))
+        .replace("%sizes%","100vw")
         .replace("%src%",imgSrc(this.headerpic))
-        .replace("%alt%",this.name + " - Header Photo")
+        .replace("%alt%",this.name)
+        );
+    $("#logo-wrapper").append(template.img
+        .replace(/%srcset|sizes%/g,"")
+        .replace("%src%",imgSrc(this.logo))
+        .replace("%alt%",this.name + " Logo")
         );
 }
 

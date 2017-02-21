@@ -13,6 +13,9 @@ jspm_packages
 # Optional npm cache directory
 .npm
 
+# all Thumbs.db Windows files
+Thumbs.db
+
 # distribution/production directory
 dist
 
