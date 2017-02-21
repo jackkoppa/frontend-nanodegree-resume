@@ -24,6 +24,7 @@ dev/css
 
 # temp. js files in development directory (all editing done in dev/es2015/)
 dev/js/*
+dev/es2015/resumeScripts.js
 !dev/js/jquery-3.1.1.min.js
 
 # compiled responsive image files
