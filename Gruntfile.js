@@ -19,6 +19,14 @@ module.exports = function(grunt) {
                     src: 'jquery-3.1.1.min.js',
                     dest: 'dist/js/'
                 }]
+            },
+            resumeImgDev: {
+                files: [{
+                    expand: true,
+                    cwd: 'resume-data/img',
+                    src: ['**/*','!**/*.db'],
+                    dest: 'dev/img'
+                }]
             }
         },
 

@@ -23,5 +23,8 @@ dev/css
 dev/js/*
 !dev/js/jquery-3.1.1.min.js
 
+# compiled img files
+dev/img
+
 # sass log files
 .sass-cache
