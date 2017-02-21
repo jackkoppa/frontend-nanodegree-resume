@@ -4,8 +4,11 @@
     <meta charset="utf-8">
     <title>Jack Koppa - Resume</title>
     <!-- build:css css/style.min.css -->
-    <link href="css/base.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/primary.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/footer.css">
     <!-- /build -->
 
     <!--
@@ -15,11 +18,16 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
+    <header id="header">
+        <div id="banner-wrapper" class="image-wrapper">
+        </div>
+        <div id="logo-wrapper" class="image-wrapper">
+        </div>
+        <div id="intro">
+        </div>
+    </header>
     <main id="main">
-        <header id="header" class="center-content clear-fix">
-            <ul id="topContacts" class="flex-box"></ul>
-        </header>
-        <div style="clear: both;"></div>
+        <!--
         <section id="workExperience" class="gray">
             <h2>Work Experience</h2>
         </section>
@@ -32,17 +40,16 @@
         <section id="mapDiv">
             <h2>Where I've Lived and Worked</h2>
         </section>
-        <footer id="lets-connect" class="dark-gray">
-            <h2 class="orange center-text">Let's Connect</h2>
-            <ul id="footerContacts" class="flex-box">
-            </ul>
-        </footer>
+        -->
     </main>
+    <footer id="footer">
+    </footer>
 
     <script src="js/jquery-3.1.1.min.js"></script>
     <!-- build:js js/resumeScripts.min.js -->
-    <script src="js/resume.js"></script>
     <script src="js/config.js"></script>
+    <script src="js/resume.js"></script>
+    <script src="js/templates.js"></script>
     <script src="js/helper.js"></script>
     <script src="js/resumeBuilder.js"></script>
     <!-- /build -->

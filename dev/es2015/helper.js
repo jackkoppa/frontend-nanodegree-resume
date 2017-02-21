@@ -1,3 +1,67 @@
+/*
+Helper functions for use in building out the resume
+*/
+
+// format date from date objects; takes 2 arguments
+function formatDate(rawDate,shortForm = true) {
+    if (rawDate) {
+        var monthsShort = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        var monthsLong = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var msg = "";
+        var monthsArray = shortForm ? monthsShort : monthsLong;
+        msg = monthsArray[rawDate.startMonth + 1] + " " + rawDate.startYear;
+        if (rawDate.startMonth !== rawDate.endMonth && rawDate.startYear !== rawDate.endYear) {
+            msg += rawDate.endMonth ? " - " + monthsArray[rawDate.endMonth] + " " + rawDate.endYear : "";
+        }
+        return msg;
+    } else {
+        return false;
+    }
+}
+
+// add srcset attribute to img based on config.js imgSize
+// first argument is file href, second is an optional custom-defined array of sizes
+// (for images not using the Grunt responsive_images task defaults)
+function imgSrcSet(imgFile,sizesArray) {
+    var srcString = "";
+    var srcArray = [];
+    if (typeof sizesArray === "undefined") {
+        for(var breakpoint in breakpoints) {
+            if(breakpoints.hasOwnProperty(breakpoint) && breakpoints[breakpoint] !== null) {
+                srcArray.push(imgFile.replace(/\.jpg/, "-" + breakpoints[breakpoint] + ".jpg ") + breakpoints[breakpoint] + "w");
+            }
+        }
+    } else if (Array.isArray(sizesArray)) {
+        sizesArray.forEach(function(size) {
+            srcArray.push(imgFile.replace(/\.jpg/, "-" + size + ".jpg ") + size + "w");
+        });
+    } else {
+        return "";
+    }
+    srcArray = srcArray.reverse();
+    srcString = srcArray.join(", ");
+    return srcString;
+}
+
+// add src attribute to img
+function imgSrc(imgFile) {
+    return imgFile.replace(/\.jpg/, "-" + breakpoints["mobile"] + ".jpg ");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var HTMLheaderName = '<h1 id="name">%data%</h1>';
 var HTMLheaderRole = '<span>%data%</span><hr>';
 
@@ -26,7 +90,6 @@ var HTMLprojectStart = '<div class="project-entry"></div>';
 var HTMLprojectTitle = '<a href="#">%data%</a>';
 var HTMLprojectDates = '<div class="date-text">%data%</div>';
 var HTMLprojectDescription = '<p><br>%data%</p>';
-var HTMLprojectImage = '<img src="%data%">';
 
 var HTMLschoolStart = '<div class="education-entry"></div>';
 var HTMLschoolName = '<a href="#">%data%';
@@ -44,14 +107,6 @@ var HTMLonlineURL = '<br><a href="#">%data%</a>';
 var internationalizeButton = '<button>Internationalize</button>';
 var googleMap = '<div id="map"></div>';
 
-// Internationalize
-$(document).ready(function() {
-    $('button').click(function() {
-        var $name = $('#name');
-        var iName = inName($name.text()) || function(){};
-        $name.html(iName);
-    });
-});
 
 // Click locations
 var clickLocations = [];

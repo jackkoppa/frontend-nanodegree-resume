@@ -37,12 +37,14 @@ module.exports = function(grunt) {
         },
 
         copy: {
+            dev: {
+                files: [
+                    // pull resume.js from resume-data submodule, so its data can be used
+                    {expand: true, cwd: 'resume-data', src: 'resume.js', dest: 'dev/es2015'}
+                ]
+            },
             beforeResponsive: {
                 files: [
-                    // pull resume.js from resume-data submodule, so its data can be used (does not need
-                    // to be compiled, since it's straight from JSON)
-                    {expand: true, src: 'resume-data/resume.js', dest: 'dev/js/'},
-
                     // images from resume-data repo
                     {expand: true, cwd: 'resume-data/img', src: ['**/*','!**/*.db'], dest: 'img'}
                 ]
@@ -61,7 +63,10 @@ module.exports = function(grunt) {
                     {expand: true, src: 'dev/js/jquery-3.1.1.min.js', dest: 'dist/js'},
 
                     // copy entire dev/responsive_images directory
-                    {expand: true, cwd: 'dev/responsive_images', src: ['**/*','!**/*.db'], dest: 'dist/responsive_images'}
+                    {expand: true, cwd: 'dev/responsive_images', src: ['**/*','!**/*.db'], dest: 'dist/responsive_images'},
+
+                    // copy entire fonts directory
+                    {expand: true, src: 'dev/font', dest: 'dist'}
                 ]
             }
         },
@@ -123,7 +128,7 @@ module.exports = function(grunt) {
             // in development, this is just for easy linting. Task is also used in production build,
             // to create final minified .js file
             dev: {
-                src: ['dev/es2015/config.js', 'resume-data/resume.js', 'dev/es2015/helper.js', 'dev/es2015/resumeBuilder.js'],
+                src: ['dev/es2015/config.js', 'dev/es2015/resume.js', 'dev/es2015/templates.js', 'dev/es2015/helper.js', 'dev/es2015/resumeBuilder.js'],
                 dest: 'dev/es2015/resumeScripts.js'
             }
         },
@@ -147,9 +152,9 @@ module.exports = function(grunt) {
         },
 
         clean: {
-            // to avoid confusion when developing, deletes the concatenated es2015 file after
-            // it is compiled to js by babel
-            dev: ['dev/es2015/resumeScripts.js'],
+            // to avoid confusion when developing, deletes the concatenated es2015 file
+            // & resume.js (from resume-data), after they are used by babel
+            dev: ['dev/es2015/resumeScripts.js','dev/es2015/resume.js'],
 
             // could be periodically run to clean out responsive_images directories,
             // which are not flushed on each run of the responsive_images task
@@ -242,7 +247,7 @@ module.exports = function(grunt) {
             watch: {
                 devJS: {
                     files: 'dev/es2015/*.js',
-                    tasks: ['concat','babel','clean:dev','jshint']
+                    tasks: ['copy:dev','concat','babel','clean:dev','jshint']
                 },
                 devSCSS: {
                     files: ['dev/scss/*.scss'],
@@ -260,7 +265,7 @@ module.exports = function(grunt) {
             watch: {
                 prodJS: {
                     files: 'dev/es2015/*.js',
-                    tasks: ['concat','babel','jshint','uglify']
+                    tasks: ['copy:dev','concat','babel','clean:dev','jshint','uglify']
                 },
                 prodSCSS: {
                     files: ['dev/scss/*.scss'],
@@ -289,9 +294,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-processhtml');
 
-    grunt.registerTask('default', ['copy:beforeResponsive','responsive_images','copy:afterResponsive','copy:dist','sass','postcss','concat','babel','clean:dev','uglify','jshint','processhtml']);
-    grunt.registerTask('serveDev', ['copy:beforeResponsive','responsive_images','copy:afterResponsive','sass:dev','postcss:dev','concat','babel','clean:dev','jshint','connect:dev','watchDev']);
-    grunt.registerTask('serveProd', ['copy:beforeResponsive','responsive_images','copy:afterResponsive','copy:dist','sass:prod','postcss:prod','concat','babel','clean:dev','uglify','jshint','processhtml','connect:prod','watchProd']);
+    grunt.registerTask('default', ['copy:dev','copy:beforeResponsive','responsive_images','copy:afterResponsive','copy:dist','sass','postcss','concat','babel','clean:dev','uglify','jshint','processhtml']);
+    grunt.registerTask('serveDev', ['copy:dev','copy:beforeResponsive','responsive_images','copy:afterResponsive','sass:dev','postcss:dev','concat','babel','clean:dev','jshint','connect:dev','watchDev']);
+    grunt.registerTask('serveProd', ['copy:dev','copy:beforeResponsive','responsive_images','copy:afterResponsive','copy:dist','sass:prod','postcss:prod','concat','babel','clean:dev','uglify','jshint','processhtml','connect:prod','watchProd']);
 
     // could be periodically run to clean out responsive_images directories,
     // which are not flushed on each run of the responsive_images task

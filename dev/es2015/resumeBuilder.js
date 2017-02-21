@@ -1,4 +1,8 @@
 /*
+Store resume.data in 4 accessible objects, and append templates to index.html
+*/
+
+/*
 An implementation of this project drawing from a centralized JSON feed would use something like
 the following AJAX call to pull in resume.json data. This project, though, makes use of the
 `grunt compileJS` function in the `resume-data` repo, which will output a resume.js file.
@@ -25,41 +29,15 @@ var education = resume.data.education;
 var work = resume.data.work;
 var projects = resume.data.projects;
 
-// format date from date objects; takes 2 arguments
-function formatDate(rawDate,shortForm = true) {
-    if (rawDate) {
-        var monthsShort = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-        var monthsLong = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        var msg = "";
-        var monthsArray = shortForm ? monthsShort : monthsLong;
-        msg = monthsArray[rawDate.startMonth + 1] + " " + rawDate.startYear;
-        if (rawDate.startMonth !== rawDate.endMonth && rawDate.startYear !== rawDate.endYear) {
-            msg += rawDate.endMonth ? " - " + monthsArray[rawDate.endMonth] + " " + rawDate.endYear : "";
-        }
-        return msg;
-    } else {
-        return false;
-    }
+bio.display = function() {
+    $("#banner-wrapper").append(template.img
+        .replace("%srcset%",imgSrcSet(imgDir + this.headerpic,[480,640,900,1200,1800]))
+        .replace("%src%",imgSrc(this.headerpic))
+        .replace("%alt%",this.name + " - Header Photo")
+        );
 }
 
-// add srcset based on config.js imgSize
-function imgSrcSet(imgFile) {
-    var srcString = "";
-    var srcArray = [];
-    for(var breakpoint in breakpoints) {
-        if(breakpoints.hasOwnProperty(breakpoint) && breakpoints[breakpoint] !== null) {
-            srcArray.push(imgFile.replace(/\.jpg/, "-" + breakpoints[breakpoint] + ".jpg ") + breakpoints[breakpoint] + "w");
-        }
-    }
-    srcArray = srcArray.reverse();
-    srcString = srcArray.join(" ");
-    return srcString;
-}
-
-function imgSrc(imgFile) {
-    return imgFile.replace(/\.jpg/, "-" + breakpoints["mobile"] + ".jpg ");
-}
-
+/*
 bio.display = function() {
     $("#header").prepend(HTMLheaderRole.replace("%data%",this.role));
     $("#header").prepend(HTMLheaderName.replace("%data%",this.name));
@@ -86,7 +64,9 @@ bio.display = function() {
 bio.appendContacts = function(jqueryString,prop) {
     $(jqueryString).append(HTMLcontactGeneric.replace("%contact%",prop).replace("%data%",this.contacts[prop]));
 }
+*/
 
+/*
 work.display = function() {
     this.jobs.some(function importWork(job, index) {
         $("#workExperience").append(HTMLworkStart);
@@ -102,7 +82,9 @@ work.display = function() {
         return index + 1 >= maxJobs;
     });
 }
+*/
 
+/*
 projects.display = function() {
     this.projects.some(function(project, index) {
         $("#projects").append(HTMLprojectStart);
@@ -113,7 +95,10 @@ projects.display = function() {
         var description = HTMLprojectDescription.replace("%data%",project.description.short);
         var images = [];
         project.images.some(function(url, index) {
-            images.push(HTMLprojectImage.replace("%data%",imgDir + "/" + project.imgDir + "/" + url));
+            images.push(HTMLprojectImage.replace(
+                "%data%",
+                imgDir + "/" + project.imgDir + "/" + url
+                ));
             srcSet(imgDir + "/" + project.imgDir + "/" + url);
             return index + 1 >= maxProjectImgs;
         });
@@ -123,22 +108,9 @@ projects.display = function() {
         return index + 1 >= maxProjects;
     });
 }
+*/
 
 
 bio.display();
-work.display();
-projects.display();
-
-
-$(document).click(function(loc) {
-    logClicks(loc.pageX, loc.pageY);
-})
-
-$("#main").append(internationalizeButton);
-
-function inName(name) {
-    var nameArray = name.split(" ");
-    nameArray[1] = nameArray[1].toUpperCase();
-    nameArray[0] = nameArray[0].charAt(0).toUpperCase() + nameArray[0].slice(1,nameArray[0].length).toLowerCase();
-    return nameArray.join(" ");
-}
+// work.display();
+// projects.display();
