@@ -25,8 +25,6 @@ var education = resume.data.education;
 var work = resume.data.work;
 var projects = resume.data.projects;
 
-var imgDir = responsiveImgs ? 'resume-data/img_responsive' : 'resume-data/img';
-
 // format date from date objects; takes 2 arguments
 function formatDate(rawDate,shortForm = true) {
     if (rawDate) {
@@ -42,6 +40,24 @@ function formatDate(rawDate,shortForm = true) {
     } else {
         return false;
     }
+}
+
+// add srcset based on config.js imgSize
+function imgSrcSet(imgFile) {
+    var srcString = "";
+    var srcArray = [];
+    for(var breakpoint in breakpoints) {
+        if(breakpoints.hasOwnProperty(breakpoint) && breakpoints[breakpoint] !== null) {
+            srcArray.push(imgFile.replace(/\.jpg/, "-" + breakpoints[breakpoint] + ".jpg ") + breakpoints[breakpoint] + "w");
+        }
+    }
+    srcArray = srcArray.reverse();
+    srcString = srcArray.join(" ");
+    return srcString;
+}
+
+function imgSrc(imgFile) {
+    return imgFile.replace(/\.jpg/, "-" + breakpoints["mobile"] + ".jpg ");
 }
 
 bio.display = function() {
@@ -98,6 +114,7 @@ projects.display = function() {
         var images = [];
         project.images.some(function(url, index) {
             images.push(HTMLprojectImage.replace("%data%",imgDir + "/" + project.imgDir + "/" + url));
+            srcSet(imgDir + "/" + project.imgDir + "/" + url);
             return index + 1 >= maxProjectImgs;
         });
         $(".project-entry:last").append(title + dates + description + images.join(""));

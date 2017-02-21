@@ -16,6 +16,9 @@ jspm_packages
 # distribution/production directory
 dist
 
+# compiled image files (from resume-data submodule)
+img
+
 # temp. css files in development directory
 dev/css
 
@@ -23,8 +26,8 @@ dev/css
 dev/js/*
 !dev/js/jquery-3.1.1.min.js
 
-# compiled img files
-dev/img
+# compiled responsive image files
+dev/responsive_images
 
 # sass log files
 .sass-cache
