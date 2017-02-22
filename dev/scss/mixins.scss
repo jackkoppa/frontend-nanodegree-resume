@@ -27,16 +27,33 @@
 }
 
 // get font-sizes map
-@function f($element, $breakpoint: base) {
+@function f($element, $breakpoint: null) {
     @if not map-has-key($font-sizes, $element) {
         @warn "element key not found in $font-sizes. Property omitted";
     }
 
     // allows for individual selection of media query font-sizes
     $size-options: map-get($font-sizes, $element);
+    @if $breakpoint == null and $currentFrom == false {
+        $breakpoint: 'xs';
+    } @else {
+        $breakpoint: $currentFrom;
+    }
     @if not map-has-key($size-options, $breakpoint) {
-        @return map-get($size-options, 'base');
+        @return map-get($size-options, 'xs');
     }
 
     @return map-get($size-options, $breakpoint);
+}
+
+// get gutter size; defaults to xs gutter
+@function g($breakpoint: null) {
+    @if $breakpoint == null and $currentFrom == false and $currentUntil == false {
+        $breakpoint: 'xs';
+    } @else if $currentFrom != false {
+        $breakpoint: $currentFrom;
+    } @else if $currentUntil != false {
+        $breakpoint: $currentUntil;
+    }
+    @return map-get($gutters, $breakpoint);
 }

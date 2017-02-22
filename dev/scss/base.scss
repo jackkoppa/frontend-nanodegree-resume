@@ -50,6 +50,7 @@ a {
 }
 
 img {
+    display: block;
     max-width: 100%;
 }
 
@@ -59,17 +60,33 @@ img {
     flex-wrap: wrap;
     margin: 0 auto;
     max-width: px2rem(1200px);
-    padding: px2rem($gutter);
     width: 100%;
-    @include mq(tablet) {
-        padding: px2rem($gutter-tablet);
+    $currentpx: 0;
+    @each $breakpoint, $px in $mq-breakpoints {
+        @if $px == null {
+            padding: px2rem(map-get($gutters, $breakpoint));
+            $currentpx: map-get($gutters, $breakpoint);
+        } @else if $currentpx != map-get($gutters, $breakpoint) {
+            @include mq($breakpoint) {
+                padding: px2rem(map-get($gutters, $breakpoint));
+            }
+            $currentpx: map-get($gutters, $breakpoint);
+        }
     }
 }
 
 .element {
-    padding: px2rem($gutter);
-    @include mq(tablet) {
-        padding: px2rem($gutter-tablet);
+    $currentpx: 0;
+    @each $breakpoint, $px in $mq-breakpoints {
+        @if $px == null {
+            padding: px2rem(map-get($gutters, $breakpoint));
+            $currentpx: map-get($gutters, $breakpoint);
+        } @else if $currentpx != map-get($gutters, $breakpoint) {
+            @include mq($breakpoint) {
+                padding: px2rem(map-get($gutters, $breakpoint));
+            }
+            $currentpx: map-get($gutters, $breakpoint);
+        }
     }
 }
 
@@ -82,7 +99,7 @@ img {
 }
 
 /* sm (mobile) */
-@include mq($from: mobile) {
+@include mq(sm) {
     @for $i from 1 through 12 {
         .box-sm-#{$i} {
             width: (100% / 12) * $i;
@@ -91,7 +108,7 @@ img {
 }
 
 /* md (tablet) */
-@include mq($from: tablet) {
+@include mq(md) {
     @for $i from 1 through 12 {
         .box-md-#{$i} {
             width: (100% / 12) * $i;
@@ -100,7 +117,7 @@ img {
 }
 
 /* lg (laptop) */
-@include mq($from: desktop) {
+@include mq(lg) {
     @for $i from 1 through 12 {
         .box-lg-#{$i} {
             width: (100% / 12) * $i;
@@ -109,7 +126,7 @@ img {
 }
 
 /* xl (desktop) */
-@include mq($from: wide) {
+@include mq(xl) {
     @for $i from 1 through 12 {
         .box-xl-#{$i} {
             width: (100% / 12) * $i;

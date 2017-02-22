@@ -30,7 +30,16 @@ var work = resume.data.work;
 var projects = resume.data.projects;
 
 bio.display = function() {
+    // start #header
     $("#banner-wrapper").append(template.img
+        .replace("%srcset%",imgSrcSet(imgDir + this.headerpic,[480,640,900,1200,1800]))
+        .replace("%sizes%","100vw")
+        .replace("%src%",imgSrc(this.headerpic))
+        .replace("%alt%",this.name)
+        );
+    // extra cover image to show blur on supporting browsers
+    $("#banner-wrapper").append(template.divImg
+        .replace("%class%","blur-cover box-xs-7 box-md-6")
         .replace("%srcset%",imgSrcSet(imgDir + this.headerpic,[480,640,900,1200,1800]))
         .replace("%sizes%","100vw")
         .replace("%src%",imgSrc(this.headerpic))
@@ -43,6 +52,18 @@ bio.display = function() {
         );
     $("#intro").append(template.name.replace("%data%",this.name));
     $("#intro").append(template.role.replace("%data%",this.role));
+    $("#summary").append(template.welcomeMsg.replace("%data%",this.welcomeMessage));
+    $("#summary").append(template.summaryMsg.replace("%data%",this.personalSummary));
+    // end #header
+
+    // start #main
+    this.skills.forEach(function(skill,index,skills) {
+        $("#skills-list").append(template.skillLi
+            .replace("%skill%",skill)
+            .replace("%skillSmall%",skill.toLowerCase().replace(/\s|\.\w+/g,""))
+            );
+    });
+
 }
 
 /*

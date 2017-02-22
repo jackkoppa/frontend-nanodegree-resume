@@ -142,9 +142,12 @@ $mq-media-type: all !default;
     $min-width: 0;
     $max-width: 0;
     $media-query: '';
-
+    $currentFrom: false !global;
+    $currentUntil: false !global;
     // From: this breakpoint (inclusive)
     @if $from {
+        // assign to global variable to keep track for other functions, until changed by next media query
+        $currentFrom: $from !global;
         @if type-of($from) == number {
             $min-width: px2em($from);
         } @else {
@@ -154,6 +157,8 @@ $mq-media-type: all !default;
 
     // Until: that breakpoint (exclusive)
     @if $until {
+        // assign to global variable to keep track for other functions, until changed by next media query
+        $currentUntil: $until !global;
         @if type-of($until) == number {
             $max-width: px2em($until);
         } @else {
@@ -202,6 +207,8 @@ $mq-media-type: all !default;
         }
 
     }
+    $currentFrom: false !global;
+    $currentUntil: false !global;
 }
 
 /// Add a breakpoint

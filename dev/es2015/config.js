@@ -13,9 +13,9 @@ var maxProjectImgs = 4;
 var imgDir = "responsive_images/";
 
 var breakpoints = {
-    base: null,
-    mobile: 480,
-    tablet: 640,
-    desktop: 900,
-    wide: 1200
+    xs: null,
+    sm: 480,
+    md: 640,
+    lg: 900,
+    xl: 1200
 }

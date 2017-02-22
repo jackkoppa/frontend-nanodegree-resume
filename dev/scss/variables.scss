@@ -1,10 +1,10 @@
 // Media Query Breakpoints
 $mq-breakpoints: (
-	base: null,
-    mobile:  480px,
-    tablet:  640px,
-    desktop: 900px,
-    wide:    1200px
+	xs: null,
+    sm: 480px,
+    md: 640px,
+    lg: 900px,
+    xl: 1200px
 ) !default;
 
 // Typography
@@ -12,13 +12,13 @@ $base-font-size: 16px !default;
 
 // Broken down into nested sass maps to define media query font sizes
 $font-sizes: (
-    h1: (base: 30px, mobile: 36px, tablet: 42px, desktop: 48px),
-    h2: (base: 24px, mobile: 30px, tablet: 36px),
-    h3: (base: 20px, mobile: 24px, tablet: 30px),
-    h4: (base: 18px, tablet: 24px),
-    h5: (base: 18px),
-    h6: (base: 12px),
-    p: (base: 16px),
+    h1: (xs: 30px, sm: 36px, md: 42px, lg: 54px, xl: 60px),
+    h2: (xs: 24px, sm: 30px, md: 36px, lg: 42px),
+    h3: (xs: 20px, sm: 24px, md: 30px, lg: 30px),
+    h4: (xs: 18px, md: 24px),
+    h5: (xs: 18px),
+    h6: (xs: 12px),
+    p: (xs: 16px),
 );
 
 // Colors
@@ -35,8 +35,14 @@ $white-semi-transparent: rgba(255,255,255,0.7);
 // Structure
 // Padding
 // currently keeping padding the same across devices
-$gutter: 10px;
-$gutter-tablet: 10px;
+// if any padding *is* changed, a media query is automatically added for both .container and .element at that size
+$gutters: (
+    xs: 10px,
+    sm: 10px,
+    md: 20px,
+    lg: 10px,
+    xl: 10px
+);
 
 // Z-index levels
 $z-bottom: 1;
@@ -45,3 +51,6 @@ $z-mid: 20;
 $z-upper: 30;
 $z-top: 100;
 
+// Keep track of current $from & $until values for mq mixin
+$currentFrom: false;
+$currentUntil: false;
