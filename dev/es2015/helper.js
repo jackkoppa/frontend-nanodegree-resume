@@ -45,7 +45,18 @@ function imgSrcSet(imgFile,sizesArray) {
 
 // add src attribute to img
 function imgSrc(imgFile) {
-    return imgFile.replace(/\.jpg/, "-" + breakpoints["mobile"] + ".jpg ");
+    return imgFile.replace(/\.jpg/, "-" + breakpoints.sm + ".jpg ");
+}
+
+// replace all %template% values for the img or imgDiv templates
+function imgReplace(src,sizes,alt,sizesArray,div = false,className = "") {
+    var string = div ? template.divImg : template.img;
+    return string
+        .replace("%class%",className)
+        .replace("%srcset%",imgSrcSet(imgDir + src,sizesArray))
+        .replace("%sizes%",sizes)
+        .replace("%src%",imgSrc(imgDir + src))
+        .replace("%alt%",alt);
 }
 
 

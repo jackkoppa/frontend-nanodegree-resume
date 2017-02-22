@@ -31,25 +31,24 @@ var projects = resume.data.projects;
 
 bio.display = function() {
     // start #header
-    $("#banner-wrapper").append(template.img
-        .replace("%srcset%",imgSrcSet(imgDir + this.headerpic,[480,640,900,1200,1800]))
-        .replace("%sizes%","100vw")
-        .replace("%src%",imgSrc(this.headerpic))
-        .replace("%alt%",this.name)
-        );
+    $("#banner-wrapper").append(imgReplace( // in helper.js
+        this.headerpic,
+        "100vw",
+        this.name,
+        [480,640,900,1200,1800]));
     // extra cover image to show blur on supporting browsers
-    $("#banner-wrapper").append(template.divImg
-        .replace("%class%","blur-cover box-xs-7 box-md-6")
-        .replace("%srcset%",imgSrcSet(imgDir + this.headerpic,[480,640,900,1200,1800]))
-        .replace("%sizes%","100vw")
-        .replace("%src%",imgSrc(this.headerpic))
-        .replace("%alt%",this.name)
-        );
-    $("#logo-wrapper").append(template.img
-        .replace(/%srcset%|%sizes%/g,"")
-        .replace("%src%",imgSrc(imgDir + this.logo))
-        .replace("%alt%",this.name + " Logo")
-        );
+    $("#banner-wrapper").append(imgReplace(
+        this.headerpic,
+        "100vw",
+        this.name,
+        [480,640,900,1200,1800],
+        true,
+        "blur-cover box-xs-7 box-md-6"));
+    $("#logo-wrapper").append(imgReplace(
+        this.logo,
+        "",
+        this.name + " Logo",
+        false));
     $("#intro").append(template.name.replace("%data%",this.name));
     $("#intro").append(template.role.replace("%data%",this.role));
     $("#summary").append(template.welcomeMsg.replace("%data%",this.welcomeMessage));
@@ -63,8 +62,20 @@ bio.display = function() {
             .replace("%skillSmall%",skill.toLowerCase().replace(/\s|\.\w+/g,""))
             );
     });
-
 }
+
+education.display = function() { /*
+    function prepareSchool(school, array) {
+        var output = "";
+        output += school.logo ? template.img
+            .replace(/%srcset%|%sizes%/,"")
+            .replace("%sizes")
+    }*/
+    this.schools.forEach(function(school, index, array) {
+
+    });
+}
+
 
 /*
 bio.display = function() {
