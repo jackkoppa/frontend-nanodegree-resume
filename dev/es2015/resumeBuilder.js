@@ -37,10 +37,12 @@ bio.display = function() {
         .replace("%alt%",this.name)
         );
     $("#logo-wrapper").append(template.img
-        .replace(/%srcset|sizes%/g,"")
-        .replace("%src%",imgSrc(this.logo))
+        .replace(/%srcset%|%sizes%/g,"")
+        .replace("%src%",imgSrc(imgDir + this.logo))
         .replace("%alt%",this.name + " Logo")
         );
+    $("#intro").append(template.name.replace("%data%",this.name));
+    $("#intro").append(template.role.replace("%data%",this.role));
 }
 
 /*

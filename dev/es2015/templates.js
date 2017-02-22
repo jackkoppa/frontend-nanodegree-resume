@@ -5,6 +5,8 @@ Simple template variables, stored withing template object
 var template = {};
 
 // Header templates
+template.name = '<h1 class="element">%data%</h1>';
+template.role = '<span class="element">%data%</span>';
 
 // Contact templates
 

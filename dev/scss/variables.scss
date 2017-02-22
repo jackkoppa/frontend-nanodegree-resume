@@ -29,10 +29,19 @@ $white: #fff;
 $light-grey: #ddd;
 $dark-grey: #333;
 $black: #000;
+$white-transparent: rgba(255,255,255,0.2);
+$white-semi-transparent: rgba(255,255,255,0.7);
 
 // Structure
 // Padding
 // currently keeping padding the same across devices
 $gutter: 10px;
 $gutter-tablet: 10px;
+
+// Z-index levels
+$z-bottom: 1;
+$z-lower: 10;
+$z-mid: 20;
+$z-upper: 30;
+$z-top: 100;
 

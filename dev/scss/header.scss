@@ -1,3 +1,45 @@
-p {
-  margin: 0;
+@import 'variables';
+@import 'mq';
+@import 'mixins';
+
+header {
+    position: relative;
+    z-index: $z-bottom;
+}
+
+#banner-wrapper {
+    max-height: 80vh;
+    overflow: hidden;
+    position: relative;
+}
+
+#logo-wrapper {
+    bottom: -30px;
+    left: (100% / 12);
+    position: absolute;
+    z-index: $z-top;
+    @include mq(mobile) {
+        left: 12.5%;
+    }
+    @include mq(tablet) {
+        left: (100% / 6);
+    }
+}
+
+#intro {
+    background-color: $white-transparent;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: $z-bottom;
+    h1 {
+        text-transform: uppercase;
+        font-weight: 300;
+    }
+    span {
+        text-transform: lowercase;
+    }
 }
