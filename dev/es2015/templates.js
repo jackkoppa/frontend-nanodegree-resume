@@ -4,26 +4,34 @@ Simple template variables, stored withing template object
 
 var template = {};
 
-// Header templates
-template.name = '<h1 class="element">%data%</h1>';
-template.role = '<h2 class="element">%data%</h2>';
-template.welcomeMsg = '<h4 class="element">%data%</h4>';
-template.summaryMsg = '<p class="element">%data%</p>';
+template.bio = {
+    // Header templates
+    name: '<h1 class="element">%name%</h1>',
+    role: '<h2 class="element">%role%</h2>',
+    welcomeMsg: '<h4 class="element">%welcomeMsg%</h4>',
+    summaryMsg: '<p class="element">%summaryMsg%</p>',
 
-// Skills templates
-template.skill = '<span>%skill%</span>';
-template.skillIcon = '<i class="icon icon-%skillSmall%"></i>';
-template.skillLi = '<li class="skill-item">' + template.skillIcon + template.skill + '</li>';
+    // Skills templates
+    skill: '<span>%skill%</span>',
+    skillIcon: '<i class="icon icon-%skillSmall%"></i>'
+}
+template.bio.skillLi = '<li class="skill-item">' + template.bio.skillIcon + template.bio.skill + '</li>';
 
 // Education templates
-template.eduSchool = '<h4>%school%</h4>';
-template.eduLocation = '<span class="location">%location%</span>';
-template.eduDegree = '<span class="major">%degree% %major%</span>';
-template.eduMinor = '<span class="minor">Minor, %minor%</span>';
-template.eduDates = '<span class="dates">%dates%</span>';
-template.eduDetails = '<ul class="details"></ul>';
-template.eduDetail = '<li class="detail">%detail%</li>';
-template.eduElement = '<div class="education %class% element"><a href="%url%"></a></div>';
+template.education = {
+    elementStart: '<div class="education %class% element">',
+    linkStart: '<a href="%url%" target="_blank">',
+    school: '<h4>%school%</h4>',
+    location: '<span class="location">%location%</span>',
+    degree: '<span class="major">%degree%%major%</span>',
+    minor: '<span class="minor">Minor, %minor%</span>',
+    dates: '<span class="dates">%dates%</span>',
+    details: '<ul class="details">%details%</ul>',
+    detail: '<li class="detail">%detail%</li>',
+    linkEnd: '</a>',
+    elementEnd: '</div>'
+}
+
 
 // Work templates
 
@@ -35,3 +43,7 @@ template.eduElement = '<div class="education %class% element"><a href="%url%"></
 //// Image templates
 template.img = '<img srcset="%srcset%" sizes="%sizes%" src="%src%" alt="%alt%" >';
 template.divImg = '<div class="image-wrapper %class%">' + template.img + '</div>';
+
+
+// set tpl equal to base object (local tpl vars are defined within each object in resumeBuilder.js)
+var tpl = template;

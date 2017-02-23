@@ -30,6 +30,7 @@ var work = resume.data.work;
 var projects = resume.data.projects;
 
 bio.display = function() {
+    var tpl = template.bio;
     // start #header
     $("#banner-wrapper").append(imgReplace( // in helper.js
         this.headerpic,
@@ -49,30 +50,63 @@ bio.display = function() {
         "",
         this.name + " Logo",
         false));
-    $("#intro").append(template.name.replace("%data%",this.name));
-    $("#intro").append(template.role.replace("%data%",this.role));
-    $("#summary").append(template.welcomeMsg.replace("%data%",this.welcomeMessage));
-    $("#summary").append(template.summaryMsg.replace("%data%",this.personalSummary));
+    $("#intro").append(tpl.name.replace("%name%",this.name));
+    $("#intro").append(tpl.role.replace("%role%",this.role));
+    $("#summary").append(tpl.welcomeMsg.replace("%welcomeMsg%",this.welcomeMessage));
+    $("#summary").append(tpl.summaryMsg.replace("%summaryMsg%",this.personalSummary));
     // end #header
 
     // start #main
     this.skills.forEach(function(skill,index,skills) {
-        $("#skills-list").append(template.skillLi
+        $("#skills-list").append(tpl.skillLi
             .replace("%skill%",skill)
             .replace("%skillSmall%",skill.toLowerCase().replace(/\s|\.\w+/g,""))
             );
     });
 }
 
-education.display = function() { /*
-    function prepareSchool(school, array) {
+education.display = function() {
+    var tpl = template.education;
+    function prepareSchool(school) {
+        var physical = school.location ? true : false;
+        var name = school.name ? school.name : (school.school ? school.school : "");
         var output = "";
-        output += school.logo ? template.img
-            .replace(/%srcset%|%sizes%/,"")
-            .replace("%sizes")
-    }*/
-    this.schools.forEach(function(school, index, array) {
-
+        output += physical ? tpl.elementStart.replace("%class%","physical-school") : tpl.elementStart.replace("%class%","online-program");
+        output += school.url ? tpl.linkStart.replace("%url%",school.url) : "";
+        if(school.logo) {
+            output += imgReplace(
+                school.imgDir + "/" + school.logo,
+                "",
+                name + " Logo",
+                false);
+        }
+        output += tpl.school.replace("%school%",name);
+        output += physical ? tpl.location.replace("%location%",school.location) : "";
+        if (school.degree && Array.isArray(school.major)) {
+            school.major.forEach(function(major) {
+                output += tpl.degree
+                    .replace("%degree%",school.degree)
+                    .replace("%major%",major);
+            });
+        } else if (school.title) {
+            output += tpl.degree.replace("%degree%%major%",school.title);
+        }
+        output += school.minor ? tpl.minor.replace("%minor%",school.minor) : "";
+        output += school.dates ? tpl.dates.replace("%dates%",formatDate(school.dates)) : "";
+        if (school.details) {
+            output += tpl.details.replace("%details%", school.details.forEach(function(detail) {
+                return tpl.detail.replace("%detail%",detail);
+            }));
+        }
+        output += school.url ? tpl.linkEnd : "";
+        output += tpl.elementEnd;
+        return output;
+    }
+    this.schools.forEach(function(school) {
+        $("#education").append(prepareSchool(school));
+    });
+    this.onlineCourses.forEach(function(school) {
+        $("#education").append(prepareSchool(school));
     });
 }
 
@@ -152,5 +186,6 @@ projects.display = function() {
 
 
 bio.display();
+education.display();
 // work.display();
 // projects.display();

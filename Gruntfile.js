@@ -40,7 +40,10 @@ module.exports = function(grunt) {
             dev: {
                 files: [
                     // pull resume.js from resume-data submodule, so its data can be used
-                    {expand: true, cwd: 'resume-data', src: 'resume.js', dest: 'dev/es2015'}
+                    {expand: true, cwd: 'resume-data', src: 'resume.js', dest: 'dev/es2015'},
+
+                    // copy over external scripts to avoid using Babel on them (jQuery & jquery.modal)
+                    {expand: true, cwd: 'dev/es2015/external', src: '*.js', dest: 'dev/js/external'}
                 ]
             },
             beforeResponsive: {
@@ -60,13 +63,13 @@ module.exports = function(grunt) {
             dist: {
                 files: [
                     // to make sure jQuery is included in production, even though it's not compiled
-                    {expand: true, src: 'dev/js/jquery-3.1.1.min.js', dest: 'dist/js'},
+                    {expand: true, cwd: 'dev/js/external', src: '*.js', dest: 'dist/js'},
 
                     // copy entire dev/responsive_images directory
                     {expand: true, cwd: 'dev/responsive_images', src: ['**/*','!**/*.db'], dest: 'dist/responsive_images'},
 
                     // copy entire fonts directory
-                    {expand: true, src: 'dev/font', dest: 'dist'}
+                    {expand: true, cwd: 'dev/font', src: '**/*', dest: 'dist/font'}
                 ]
             }
         },
@@ -79,7 +82,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: 'dev/scss',
-                    src: ['*.scss'],
+                    src: ['*.scss','external/jquery_modal.scss'],
                     dest: 'dev/css',
                     ext: '.css'
                 }]
@@ -90,7 +93,8 @@ module.exports = function(grunt) {
                     style: 'compressed'
                 },
                 files: {
-                    'dist/css/style.min.css': 'dev/scss/styleDist.scss'
+                    'dist/css/style.min.css': 'dev/scss/styleDist.scss',
+                    'dist/css/jquery_modal.min.css': 'dev/scss/external/jquery_modal.scss'
                 }
             }
         },
@@ -158,7 +162,10 @@ module.exports = function(grunt) {
 
             // could be periodically run to clean out responsive_images directories,
             // which are not flushed on each run of the responsive_images task
-            images: ['img','dev/responsive_images','dist/responsive_images']
+            images: ['img','dev/responsive_images','dist/responsive_images'],
+
+            // remove remaining "compiled" files, not covered above
+            remaining: ['dist','dev/css','dev/js','.sass-cache']
         },
 
         uglify: {
@@ -219,7 +226,9 @@ module.exports = function(grunt) {
             prod: {
                 options: {
                     port: 8080,
-                    base: 'dist'
+                    base: 'dist',
+                    livereload: false,
+                    keepalive: true
                 }
             }
         }
@@ -296,10 +305,13 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['copy:dev','copy:beforeResponsive','responsive_images','copy:afterResponsive','copy:dist','sass','postcss','concat','babel','clean:dev','uglify','jshint','processhtml']);
     grunt.registerTask('serveDev', ['copy:dev','copy:beforeResponsive','responsive_images','copy:afterResponsive','sass:dev','postcss:dev','concat','babel','clean:dev','jshint','connect:dev','watchDev']);
-    grunt.registerTask('serveProd', ['copy:dev','copy:beforeResponsive','responsive_images','copy:afterResponsive','copy:dist','sass:prod','postcss:prod','concat','babel','clean:dev','uglify','jshint','processhtml','connect:prod','watchProd']);
+    grunt.registerTask('serveProd', ['copy:dev','copy:beforeResponsive','responsive_images','copy:afterResponsive','copy:dist','sass:prod','postcss:prod','concat','babel','clean:dev','uglify','processhtml','connect:prod']);
 
     // could be periodically run to clean out responsive_images directories,
     // which are not flushed on each run of the responsive_images task
     grunt.registerTask('cleanImages', ['clean:images']);
+
+    // to clean *everything* not included with the initial repo (allows testing build scripts from scratch)
+    grunt.registerTask('cleanNuclear', ['clean:dev','clean:images','clean:remaining']);
 
 };

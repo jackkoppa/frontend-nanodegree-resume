@@ -9,9 +9,13 @@ function formatDate(rawDate,shortForm = true) {
         var monthsLong = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         var msg = "";
         var monthsArray = shortForm ? monthsShort : monthsLong;
-        msg = monthsArray[rawDate.startMonth + 1] + " " + rawDate.startYear;
-        if (rawDate.startMonth !== rawDate.endMonth && rawDate.startYear !== rawDate.endYear) {
-            msg += rawDate.endMonth ? " - " + monthsArray[rawDate.endMonth] + " " + rawDate.endYear : "";
+        msg = monthsArray[rawDate.startMonth - 1] + " " + rawDate.startYear;
+        if (rawDate.startMonth !== rawDate.endMonth || rawDate.startYear !== rawDate.endYear) {
+            if (rawDate.endYear === null) {
+                msg += " - present";
+            } else {
+                msg += rawDate.endMonth ? " - " + monthsArray[rawDate.endMonth - 1] + " " + rawDate.endYear : "";
+            }
         }
         return msg;
     } else {
@@ -58,6 +62,7 @@ function imgReplace(src,sizes,alt,sizesArray,div = false,className = "") {
         .replace("%src%",imgSrc(imgDir + src))
         .replace("%alt%",alt);
 }
+
 
 
 
