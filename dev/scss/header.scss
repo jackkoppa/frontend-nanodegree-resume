@@ -11,6 +11,15 @@ header {
     max-height: 80vh;
     overflow: hidden;
     position: relative;
+    @include mq(md) {
+        max-height: 60vh;
+    }
+    @include mq(xl) {
+        max-height: 50vh;
+    }
+    &>img {
+        min-width: 100vw;
+    }
 }
 
 .blur-cover {
@@ -18,19 +27,32 @@ header {
     max-height: 100%;
     overflow: hidden;
     position: absolute;
-    right: 0;
     top: 0;
     z-index: $z-lower;
+
+    // proud of this, as obnoxious as it is
+    // uses the difference between 100vw (includes scrollbar) & 100% (no scrollbar)
+    // to determine if there should be padding (yes on desktops with scrollbars, no on mobiles without)
+    // uses content-box so that the padding extends the element's width, keeping the image wrapper
+    // aligned with the transparent overlay
+    box-sizing: content-box;
+    right: 0;
+    padding-right: 0;
+    right: calc(100% - 100vw);
+    padding-right: calc(100vw - 100%);
+    
     img {
+        top: 0;
         filter: blur(4px);
         min-width: 100vw;
         position: absolute;
         right: 0;
-        top: 0;
     }
 }
 #intro {
     background-color: $white-transparent;
+    flex-direction: column;
+    flex-wrap: nowrap;
     height: 100%;
     max-height: 100%;
     overflow: hidden;
@@ -39,19 +61,21 @@ header {
     top: 0;
     z-index: $z-mid;
     h1 {
-        text-transform: uppercase;
+        flex: 10% 1 1;
         font-weight: 300;
+        text-transform: uppercase;
     }
     h2 {
+        flex: 90% 9 1;
         font-weight: 300;
         text-transform: lowercase;
         @include mq($until: sm) {
             font-size: px2rem(f(p));
         }
-        @include mq($from: sm) {
+        @include mq(sm) {
             font-size: px2rem(f(h3));
         }
-        @include mq($from: lg) {
+        @include mq(lg) {
             font-size: px2rem(f(h2));
         }
     }
@@ -74,8 +98,9 @@ header {
         margin-left: calcLeft(6);
         margin-top: calcTop(6);
     }
-    @include mq(md) {
-        margin-left: calcLeft(6);
+    @include mq(lg) {
+        margin-left: calcLeft(5);
+        margin-top: calcTop(5);
     }
 }
 

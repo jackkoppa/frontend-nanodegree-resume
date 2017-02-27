@@ -31,6 +31,45 @@ var projects = resume.data.projects;
 
 bio.display = function() {
     var tpl = template.bio;
+
+
+    function prepareContact(contact,contacts) {
+        var contactName = "";
+        var contactLink = contacts[contact];
+        var target = "_blank";
+        switch (contact) {
+            case "mobile" :
+                contactLink = "tel:+" + contactLink.replace(/([\D])/g,"");
+                break;
+            case "email" : 
+                contactLink = "mailto:" + contactLink;
+                break;
+            case "github" :
+                contactLink = "https://github.com/" + contactLink;
+                break;
+            case "twitter" :
+                contactLink = "https://twitter.com/" + contactLink;
+                break;
+            case "linkedin" :
+                contactLink = "https://linkedin.com/in/" + contactLink;
+                break;
+            case "location" :
+                contactLink = "#map-div";
+                target = "self";
+                break;
+            default :
+                contactLink = "";
+                break;
+        }
+        if (contactLink === "") { return false }
+        else {
+            return tpl.contact
+                .replace("%contactLink%",contactLink)
+                .replace("%contact%",contact)
+                .replace("%target%",target);
+
+        }
+    }
     // start #header
     $("#banner-wrapper").append(imgReplace( // in helper.js
         this.headerpic,
@@ -52,6 +91,13 @@ bio.display = function() {
         false));
     $("#intro").append(tpl.name.replace("%name%",this.name));
     $("#intro").append(tpl.role.replace("%role%",this.role));
+    $("#intro").append(tpl.contacts);
+    for (var contact in this.contacts) {
+        if(this.contacts.hasOwnProperty(contact)) {
+            $("#top-contacts").append(prepareContact(contact,this.contacts));
+        }
+    }
+    
     $("#summary").append(tpl.welcomeMsg.replace("%welcomeMsg%",this.welcomeMessage));
     $("#summary").append(tpl.summaryMsg.replace("%summaryMsg%",this.personalSummary));
     // end #header
@@ -124,7 +170,7 @@ work.display = function() {
                 false);
         }
         output += tpl.title.replace("%title%",job.title);
-        output += tpl.company.replace("%company%",job.company);
+        output += tpl.employer.replace("%employer%",job.employer);
         output += tpl.location.replace("%location%",job.location);
         output += job.dates ? tpl.dates.replace("%dates%",formatDate(job.dates)) : "";
         output += tpl.description.replace("%description%",job.description);

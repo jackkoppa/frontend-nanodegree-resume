@@ -7,9 +7,13 @@ var template = {};
 template.bio = {
     // Header templates
     name: '<h1 class="element">%name%</h1>',
-    role: '<h2 class="element">%role%</h2>',
+    role: '<h2 class="role element">%role%</h2>',
     welcomeMsg: '<h4 class="element">%welcomeMsg%</h4>',
     summaryMsg: '<p class="element">%summaryMsg%</p>',
+
+    // Contacts templates
+    contacts: '<ul id="top-contacts" class="element"></ul>',
+    contact: '<li class="contact-link"><a href="%contactLink%" target="%target%"><i class="icon icon-%contact%"></i></a></li>',
 
     // Skills templates
     skill: '<span>%skill%</span>',
@@ -32,13 +36,12 @@ template.education = {
     elementEnd: '</div>'
 }
 
-
 // Work templates
 template.work = {
     elementStart: '<div class="job element">',
     linkStart: '<a href="%url%" target="_blank">',
     title: '<h4>%title%</h4>',
-    company: '<h5>%company%</h5>',
+    employer: '<h5>%employer%</h5>',
     location: '<span class="location">%location%</span>',
     dates: '<span class="dates">%dates%</span>',
     description: '<p class="description">%description%</p>',
