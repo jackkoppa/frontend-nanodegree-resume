@@ -34,6 +34,17 @@ template.education = {
 
 
 // Work templates
+template.work = {
+    elementStart: '<div class="job element">',
+    linkStart: '<a href="%url%" target="_blank">',
+    title: '<h4>%title%</h4>',
+    company: '<h5>%company%</h5>',
+    location: '<span class="location">%location%</span>',
+    dates: '<span class="dates">%dates%</span>',
+    description: '<p class="description">%description%</p>',
+    linkEnd: '</a>',
+    elementEnd: '</div>'
+}
 
 // Project templates
 

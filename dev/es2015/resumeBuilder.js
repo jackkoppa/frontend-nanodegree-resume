@@ -75,7 +75,7 @@ education.display = function() {
         output += school.url ? tpl.linkStart.replace("%url%",school.url) : "";
         if(school.logo) {
             output += imgReplace(
-                school.imgDir + "/" + school.logo,
+                school.imgDir + school.logo,
                 "",
                 name + " Logo",
                 false);
@@ -107,6 +107,33 @@ education.display = function() {
     });
     this.onlineCourses.forEach(function(school) {
         $("#education").append(prepareSchool(school));
+    });
+}
+
+work.display = function() {
+    var tpl = template.work;
+    function prepareJob(job) {
+        var output = "";
+        output += tpl.elementStart;
+        output += job.url ? tpl.linkStart.replace("%url%",job.url) : "";
+        if(job.logo) {
+            output += imgReplace(
+                job.imgDir + job.logo,
+                "",
+                job.employer + " Logo",
+                false);
+        }
+        output += tpl.title.replace("%title%",job.title);
+        output += tpl.company.replace("%company%",job.company);
+        output += tpl.location.replace("%location%",job.location);
+        output += job.dates ? tpl.dates.replace("%dates%",formatDate(job.dates)) : "";
+        output += tpl.description.replace("%description%",job.description);
+        output += job.url ? tpl.linkEnd : "";
+        output += tpl.elementEnd;
+        return output;
+    }
+    this.jobs.forEach(function(job) {
+        $("#work").append(prepareJob(job));
     });
 }
 
@@ -187,5 +214,5 @@ projects.display = function() {
 
 bio.display();
 education.display();
-// work.display();
+work.display();
 // projects.display();
