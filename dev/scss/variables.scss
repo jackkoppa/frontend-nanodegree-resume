@@ -32,6 +32,16 @@ $black: #000;
 $white-transparent: rgba(255,255,255,0.2);
 $white-semi-transparent: rgba(255,255,255,0.7);
 
+// Styling
+$fast-transition: 0.1s all linear;
+$std-transition: 0.75s all ease;
+$slow-transition: 1.25s all ease;
+
+$small-base-shadow: 1px 1px 2px -1px $black;
+$small-hover-shadow: 1px 1px 7px -1px $black;
+$base-shadow: 1px 1px 12px -3px $black;
+$hover-shadow: 1px 1px 20px -4px $black;
+
 // Structure
 // Padding
 // currently keeping padding the same across devices

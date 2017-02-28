@@ -128,7 +128,7 @@
     },
     {
       "uid": "ccc2329632396dc096bb638d4b46fb98",
-      "css": "mail",
+      "css": "email",
       "code": 61664,
       "src": "fontawesome"
     },
@@ -151,6 +151,12 @@
       "search": [
         "php"
       ]
+    },
+    {
+      "uid": "9f7e588c66cfd6891f6f507cf6f6596b",
+      "css": "mobile",
+      "code": 59400,
+      "src": "fontawesome"
     },
     {
       "uid": "2dca832362a5c0989ec4a9d0acce53bd",

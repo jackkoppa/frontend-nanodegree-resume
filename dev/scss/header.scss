@@ -60,15 +60,39 @@ header {
     right: 0;
     top: 0;
     z-index: $z-mid;
+
     h1 {
         flex: 10% 1 1;
         font-weight: 300;
         text-transform: uppercase;
     }
+
     h2 {
-        flex: 90% 9 1;
+        flex: 10% 1 1;
         font-weight: 300;
-        text-transform: lowercase;
+        text-transform: lowercase;        
+    }
+
+    #top-contacts {
+        display: block;
+        flex: 80% 8 1;
+        li {
+            display: inline-block;
+            padding: px2rem(g()) / 2;
+            a {
+                background-color: $secondary;
+                box-shadow: $small-base-shadow;
+                color: $white;
+                padding: px2rem(g()) / 2;
+                transition: $fast-transition;
+                &:hover {
+                    box-shadow: $small-hover-shadow;
+                }
+            }
+        }        
+    }
+
+    h2, #top-contacts {
         @include mq($until: sm) {
             font-size: px2rem(f(p));
         }
@@ -79,6 +103,8 @@ header {
             font-size: px2rem(f(h2));
         }
     }
+
+
 }
 
 #logo-wrapper {

@@ -13,7 +13,7 @@ template.bio = {
 
     // Contacts templates
     contacts: '<ul id="top-contacts" class="element"></ul>',
-    contact: '<li class="contact-link"><a href="%contactLink%" target="%target%"><i class="icon icon-%contact%"></i></a></li>',
+    contact: '<li><a href="%contactLink%" target="%target%"><i class="icon icon-%contact%"></i></a></li>',
 
     // Skills templates
     skill: '<span>%skill%</span>',

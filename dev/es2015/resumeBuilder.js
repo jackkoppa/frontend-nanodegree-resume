@@ -31,7 +31,7 @@ var projects = resume.data.projects;
 
 bio.display = function() {
     var tpl = template.bio;
-
+    var topContacts = ["twitter","linkedin","github","location","email"];
 
     function prepareContact(contact,contacts) {
         var contactName = "";
@@ -67,7 +67,6 @@ bio.display = function() {
                 .replace("%contactLink%",contactLink)
                 .replace("%contact%",contact)
                 .replace("%target%",target);
-
         }
     }
     // start #header
@@ -92,11 +91,9 @@ bio.display = function() {
     $("#intro").append(tpl.name.replace("%name%",this.name));
     $("#intro").append(tpl.role.replace("%role%",this.role));
     $("#intro").append(tpl.contacts);
-    for (var contact in this.contacts) {
-        if(this.contacts.hasOwnProperty(contact)) {
-            $("#top-contacts").append(prepareContact(contact,this.contacts));
-        }
-    }
+    topContacts.forEach(function(contact) {
+        $("#top-contacts").append(prepareContact(contact,bio.contacts));
+    });
     
     $("#summary").append(tpl.welcomeMsg.replace("%welcomeMsg%",this.welcomeMessage));
     $("#summary").append(tpl.summaryMsg.replace("%summaryMsg%",this.personalSummary));

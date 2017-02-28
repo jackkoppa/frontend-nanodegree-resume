@@ -231,63 +231,27 @@ module.exports = function(grunt) {
                     keepalive: true
                 }
             }
-        }
-    });
+        },
 
-    /*
-    configuring watch dynamically, so that multiple watch tasks can be set for
-    dev & prod, separately
-    */
-    // watch task (livereload) common to all watch instances
-    grunt.config.merge({
         watch: {
             options: {
-                livereload: true
+                livereload: false
             },
             refresh: {
-                files: ['dev/index.html','dev/js/*.js','dev/css/*.css']
+                files: ['dev/index.html','dev/js/*.js','dev/css/*.css'],
+                options: {
+                    livereload: true
+                }
+            },
+            devJS: {
+                files: 'dev/es2015/*.js',
+                tasks: ['copy:dev','concat','babel','clean:dev','jshint']
+            },
+            devSCSS: {
+                files: ['dev/scss/*.scss'],
+                tasks: ['sass:dev','postcss:dev']
             }
         }
-    });
-
-    // watch for dev server
-    grunt.registerTask('watchDev', function () {
-        grunt.config.merge({
-            watch: {
-                devJS: {
-                    files: 'dev/es2015/*.js',
-                    tasks: ['copy:dev','concat','babel','clean:dev','jshint']
-                },
-                devSCSS: {
-                    files: ['dev/scss/*.scss'],
-                    tasks: ['sass:dev','postcss:dev']
-                }
-            }
-        });
-
-        grunt.task.run('watch');
-    });
-
-    // watch for prod server
-    grunt.registerTask('watchProd', function () {
-        grunt.config.merge({
-            watch: {
-                prodJS: {
-                    files: 'dev/es2015/*.js',
-                    tasks: ['copy:dev','concat','babel','clean:dev','jshint','uglify']
-                },
-                prodSCSS: {
-                    files: ['dev/scss/*.scss'],
-                    tasks: ['sass:prod','postcss:prod']
-                },
-                prodHTML: {
-                    files: 'dev/index.html',
-                    tasks: ['processhtml']
-                }
-            }
-        });
-
-        grunt.task.run('watch');
     });
 
     grunt.loadNpmTasks('grunt-contrib-sass');
@@ -304,7 +268,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-processhtml');
 
     grunt.registerTask('default', ['copy:dev','copy:beforeResponsive','responsive_images','copy:afterResponsive','copy:dist','sass','postcss','concat','babel','clean:dev','uglify','jshint','processhtml']);
-    grunt.registerTask('serveDev', ['copy:dev','copy:beforeResponsive','responsive_images','copy:afterResponsive','sass:dev','postcss:dev','concat','babel','clean:dev','jshint','connect:dev','watchDev']);
+    grunt.registerTask('serveDev', ['copy:dev','copy:beforeResponsive','responsive_images','copy:afterResponsive','sass:dev','postcss:dev','concat','babel','clean:dev','jshint','connect:dev','watch']);
     grunt.registerTask('serveProd', ['copy:dev','copy:beforeResponsive','responsive_images','copy:afterResponsive','copy:dist','sass:prod','postcss:prod','concat','babel','clean:dev','uglify','processhtml','connect:prod']);
 
     // could be periodically run to clean out responsive_images directories,
