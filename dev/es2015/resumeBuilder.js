@@ -31,31 +31,35 @@ var projects = resume.data.projects;
 
 bio.display = function() {
     var tpl = template.bio;
-    var topContacts = ["twitter","linkedin","github","location","email"];
+    var topContacts = ["email","mobile","location","twitter","linkedin","github"];
 
     function prepareContact(contact,contacts) {
-        var contactName = "";
-        var contactLink = contacts[contact];
+        var contactDisplay = contacts[contact];
+        var contactLink = "";
+        var className = "";
         var target = "_blank";
         switch (contact) {
             case "mobile" :
-                contactLink = "tel:+" + contactLink.replace(/([\D])/g,"");
+                contactLink = "tel:+" + contactDisplay.replace(/([\D])/g,"");
                 break;
             case "email" : 
-                contactLink = "mailto:" + contactLink;
+                contactLink = "mailto:" + contactDisplay;
                 break;
             case "github" :
-                contactLink = "https://github.com/" + contactLink;
+                contactLink = "https://github.com/" + contactDisplay;
+                className = "hide-md";
                 break;
             case "twitter" :
-                contactLink = "https://twitter.com/" + contactLink;
+                contactLink = "https://twitter.com/" + contactDisplay;
+                className = "hide-md";
                 break;
             case "linkedin" :
-                contactLink = "https://linkedin.com/in/" + contactLink;
+                contactLink = "https://linkedin.com/in/" + contactDisplay;
+                className = "hide-md";
                 break;
             case "location" :
                 contactLink = "#map-div";
-                target = "self";
+                target = "_self";
                 break;
             default :
                 contactLink = "";
@@ -66,7 +70,9 @@ bio.display = function() {
             return tpl.contact
                 .replace("%contactLink%",contactLink)
                 .replace("%contact%",contact)
-                .replace("%target%",target);
+                .replace("%target%",target)
+                .replace("%class%",className)
+                .replace("%contactDisplay%",contactDisplay);
         }
     }
     // start #header

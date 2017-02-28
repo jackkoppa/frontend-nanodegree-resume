@@ -70,7 +70,16 @@ header {
     h2 {
         flex: 10% 1 1;
         font-weight: 300;
-        text-transform: lowercase;        
+        text-transform: lowercase;
+        @include mq($until: sm) {
+            font-size: px2rem(f(p));
+        }
+        @include mq(sm) {
+            font-size: px2rem(f(h3));
+        }
+        @include mq(lg) {
+            font-size: px2rem(f(h2));
+        }        
     }
 
     #top-contacts {
@@ -78,15 +87,58 @@ header {
         flex: 80% 8 1;
         li {
             display: inline-block;
-            padding: px2rem(g()) / 2;
+            padding: (px2rem(g()) / 2) (px2rem(g())) (px2rem(g()) / 2) 0;
+            @include mq($until: sm) {
+                font-size: px2rem(f(p));
+            }
+            @include mq(sm) {
+                font-size: px2rem(f(h5));
+            }
+            @include mq(lg) {
+                font-size: px2rem(f(h4));
+            }
+
             a {
-                background-color: $secondary;
-                box-shadow: $small-base-shadow;
-                color: $white;
-                padding: px2rem(g()) / 2;
-                transition: $fast-transition;
-                &:hover {
+                display: block;
+
+                i {
+                    background-color: $secondary;
+                    box-shadow: $small-base-shadow;
+                    color: $white; 
+                    margin-right: px2rem(g()); 
+                    padding: px2rem(g()) / 2; 
+                }
+                
+                span {
+                    color: $dark-grey;                    
+                    padding: (px2rem(g()) / 2) 0; 
+                    position: relative;
+                    &:after {
+                        background-color: $secondary;
+                        bottom: 0;
+                        content: "";
+                        height: 2px;
+                        left: 0;
+                        max-width: 0%;
+                        position: absolute;
+                        transition: $fast-transition;
+                        width: 100%;
+                    }
+                }
+                
+                i, span { 
+                    display: inline-block;
+                    transition: $fast-transition;
+                }
+
+                &:hover i {
                     box-shadow: $small-hover-shadow;
+                }
+
+                &:hover span {
+                    &:after {
+                        max-width: 100%;
+                    }
                 }
             }
         }        
