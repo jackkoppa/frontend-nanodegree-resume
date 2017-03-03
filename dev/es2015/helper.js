@@ -54,7 +54,7 @@ function imgSrc(imgFile) {
 
 // replace all %template% values for the img or imgDiv templates
 function imgReplace(src,sizes,alt,sizesArray,div = false,className = "") {
-    var string = div ? template.divImg : template.img;
+    var string = div ? template.divStart.replace("%class%","image-wrapper %class%") + template.img + template.divEnd : template.img;
     return string
         .replace("%class%",className)
         .replace("%srcset%",imgSrcSet(imgDir + src,sizesArray))
@@ -63,9 +63,16 @@ function imgReplace(src,sizes,alt,sizesArray,div = false,className = "") {
         .replace("%alt%",alt);
 }
 
-
-
-
+// replace all %template% values for the img or imgDiv templates
+function btnReplace(url = "", linkText = "", target = "_blank", linkClass = "", div = false, divClass = "") {
+    var string = div ? template.divStart.replace("%class%","button-wrapper element %class%") + template.buttonLink + template.divEnd : template.buttonLink;
+    return string
+        .replace("%url%",url)
+        .replace("%linkText%",linkText)
+        .replace("%target%",target)
+        .replace("%linkClass%",linkClass)
+        .replace("%class%",divClass);
+}
 
 
 

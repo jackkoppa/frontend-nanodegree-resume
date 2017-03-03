@@ -1,3 +1,134 @@
 @import 'variables';
 @import 'mq';
 @import 'mixins';
+
+// Tile lists
+.tile-list {
+    display: block;    
+    li {
+        display: inline-block;
+        margin: (px2em(g()) / 2) (px2em(g())) (px2em(g()) / 2) 0;
+        @include mq($until: sm) {
+            font-size: px2rem(f(p));
+        }
+        @include mq(sm) {
+            font-size: px2rem(f(h5));
+        }
+        @include mq(lg) {
+            font-size: px2rem(f(h4));
+        }
+
+		i {
+		    color: $white;		    
+		    padding: px2em(g()) / 2; 
+		}
+		
+		span {
+		    position: relative;
+		}
+
+        i, span { 
+            display: inline-block;
+        }
+    }    
+    &.links-list li {
+		a {
+		    display: block;
+
+		    i {
+			    box-shadow: $small-base-shadow;
+		        background-color: $secondary;
+		        margin-right: px2em(g());
+		    }
+		    
+		    span {
+		        color: $dark-grey;                    
+		        padding: (px2em(g()) / 2) 0; 
+		        &:after {
+		            background-color: $secondary;
+		            bottom: 0;
+		            content: "";
+		            height: 2px;
+		            left: 0;
+		            max-width: 0%;
+		            position: absolute;
+		            transition: $fast-transition;
+		            width: 100%;
+		        }
+		    }
+		    i, span { 
+		        transition: $fast-transition;
+		    }
+
+		    &:hover i {
+		        box-shadow: $small-hover-shadow;
+		    }
+
+		    &:hover span {
+		        &:after {
+		            max-width: 100%;
+		        }
+		    }
+		}
+    }
+    &:not(.links-list) li {
+    	background-color: $primary;
+    	box-shadow: $base-shadow;
+    	@include mq(md) {
+    	    font-size: px2rem(f(h3));
+    	}
+    	@include mq(lg) {
+    	    font-size: px2rem(f(h2));
+    	}
+
+    	i {
+    	}
+    	
+    	span {
+    	    color: $white;                    
+    	    padding: (px2em(g()) / 2) px2em(g()) (px2em(g()) / 2) 0; 
+    	} 
+    }        
+}
+
+// Buttons
+button {
+	&, &:hover, &:active, &:visited, &:focus {
+		background-color: transparent;
+		border: none;
+		color: $dark-grey;
+		cursor: pointer;
+	}
+}
+
+.button-wrapper {
+	text-align: center;
+	width: 100%;
+}
+
+a.link-button {
+	display: inline-block;
+	margin: 0 auto;
+	transition: $std-transition;
+	@each $breakpoint, $px in $mq-breakpoints {
+		@include mq($breakpoint) {
+			padding: px2rem(g());
+		}
+	}
+	&.flat {
+		border: 3px solid $dark-grey;
+		&:hover {
+			background-color: $light-grey;
+		}
+		&:active {
+			background-color: $mid-grey;
+		}
+		button {
+			font-weight: 600;
+			text-transform: uppercase;
+		}
+	}
+	button {
+		padding: px2rem(g());
+	}
+}

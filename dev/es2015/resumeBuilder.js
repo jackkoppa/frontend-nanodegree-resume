@@ -47,15 +47,15 @@ bio.display = function() {
                 break;
             case "github" :
                 contactLink = "https://github.com/" + contactDisplay;
-                className = "hide-md";
+                className = "hide-xs show-md";
                 break;
             case "twitter" :
                 contactLink = "https://twitter.com/" + contactDisplay;
-                className = "hide-md";
+                className = "hide-xs show-md";
                 break;
             case "linkedin" :
                 contactLink = "https://linkedin.com/in/" + contactDisplay;
-                className = "hide-md";
+                className = "hide-xs show-md";
                 break;
             case "location" :
                 contactLink = "#map-div";
@@ -88,7 +88,7 @@ bio.display = function() {
         this.name,
         [480,640,900,1200,1800],
         true,
-        "blur-cover box-xs-7 box-md-6"));
+        "blur-cover box-xs-7 box-lg-6"));
     $("#logo-wrapper").append(imgReplace(
         this.logo,
         "",
@@ -98,7 +98,7 @@ bio.display = function() {
     $("#intro").append(tpl.role.replace("%role%",this.role));
     $("#intro").append(tpl.contacts);
     topContacts.forEach(function(contact) {
-        $("#top-contacts").append(prepareContact(contact,bio.contacts));
+        $("#top-contacts-list").append(prepareContact(contact,bio.contacts));
     });
     
     $("#summary").append(tpl.welcomeMsg.replace("%welcomeMsg%",this.welcomeMessage));
@@ -106,6 +106,7 @@ bio.display = function() {
     // end #header
 
     // start #main
+    $("#skills").append(tpl.skills);
     this.skills.forEach(function(skill,index,skills) {
         $("#skills-list").append(tpl.skillLi
             .replace("%skill%",skill)
@@ -116,54 +117,66 @@ bio.display = function() {
 
 education.display = function() {
     var tpl = template.education;
-    function prepareSchool(school) {
+    function prepareSchool(school,i,array) {
         var physical = school.location ? true : false;
         var name = school.name ? school.name : (school.school ? school.school : "");
+        var final = i >= array.length - 1;
         var output = "";
-        output += physical ? tpl.elementStart.replace("%class%","physical-school") : tpl.elementStart.replace("%class%","online-program");
-        output += school.url ? tpl.linkStart.replace("%url%",school.url) : "";
+        output += tpl.startSpacer;
+        output += physical ? tpl.elementStart.replace("%class%","physical-school") : (final ? tpl.elementStart.replace("%class%","online-program last") : tpl.elementStart.replace("%class%","online-program"));
         if(school.logo) {
             output += imgReplace(
                 school.imgDir + school.logo,
                 "",
                 name + " Logo",
-                false);
+                false,
+                true,
+                "logo-wrapper element");
         }
+        output += template.divStart.replace("%class%","basics element");
         output += tpl.school.replace("%school%",name);
         output += physical ? tpl.location.replace("%location%",school.location) : "";
+        output += physical && school.dates ? template.bar : "";
+        output += school.dates ? tpl.dates.replace("%dates%",formatDate(school.dates)) : "";
         if (school.degree && Array.isArray(school.major)) {
             school.major.forEach(function(major) {
                 output += tpl.degree
                     .replace("%degree%",school.degree)
-                    .replace("%major%",major);
+                    .replace("%major%"," - " + major);
             });
         } else if (school.title) {
             output += tpl.degree.replace("%degree%%major%",school.title);
         }
         output += school.minor ? tpl.minor.replace("%minor%",school.minor) : "";
-        output += school.dates ? tpl.dates.replace("%dates%",formatDate(school.dates)) : "";
+        output += template.divEnd;
         if (school.details) {
-            output += tpl.details.replace("%details%", school.details.forEach(function(detail) {
-                return tpl.detail.replace("%detail%",detail);
-            }));
-        }
-        output += school.url ? tpl.linkEnd : "";
+            output += tpl.details.replace("%details%", function() {
+                var detailList = "";
+                school.details.forEach(function(detail) {
+                    detailList += tpl.detail.replace("%detail%",detail);
+                });
+                return detailList;
+            });
+        }        
+        output += school.url ? btnReplace(school.url, "Vist School Site", "_blank", "flat", true) : "";
         output += tpl.elementEnd;
+        output += tpl.endSpacer;
         return output;
     }
-    this.schools.forEach(function(school) {
-        $("#education").append(prepareSchool(school));
+    this.schools.forEach(function(school,index,schools) {
+        $("#education").append(prepareSchool(school,index,schools));
     });
-    this.onlineCourses.forEach(function(school) {
-        $("#education").append(prepareSchool(school));
+    this.onlineCourses.forEach(function(school,index,schools) {
+        $("#education").append(prepareSchool(school,index,schools));
     });
 }
 
 work.display = function() {
     var tpl = template.work;
-    function prepareJob(job) {
+    function prepareJob(job,i,array) {
+        var final = i >= array.length - 1;
         var output = "";
-        output += tpl.elementStart;
+        output += final ? tpl.elementStart.replace("%class%","last") : tpl.elementStart.replace("%class%","");
         output += job.url ? tpl.linkStart.replace("%url%",job.url) : "";
         if(job.logo) {
             output += imgReplace(
@@ -181,58 +194,11 @@ work.display = function() {
         output += tpl.elementEnd;
         return output;
     }
-    this.jobs.forEach(function(job) {
-        $("#work").append(prepareJob(job));
+    this.jobs.forEach(function(job,index,jobs) {
+        $("#work").append(prepareJob(job,index,jobs));
     });
 }
 
-
-/*
-bio.display = function() {
-    $("#header").prepend(HTMLheaderRole.replace("%data%",this.role));
-    $("#header").prepend(HTMLheaderName.replace("%data%",this.name));
-
-    for (var contact in this.contacts) {
-        if (this.contacts.hasOwnProperty(contact)) {
-            // using bio's appendContacts method, passing in desired element
-            // & the prop that should be used (current `contact`)
-            this.appendContacts("#topContacts",contact);
-            this.appendContacts("#footerContacts",contact);
-        }
-    }
-
-    $("#header").append(HTMLbioPic.replace("%data%",this.biopic));
-    $("#header").append(HTMLwelcomeMsg.replace("%data%",this.welcomeMessage));
-    if (this.skills.length > 0) {
-        $("#header").append(HTMLskillsStart);
-        bio.skills.forEach(function(skill) {
-            $("#skills").append(HTMLskills.replace("%data%",skill));
-        });
-    }
-}
-
-bio.appendContacts = function(jqueryString,prop) {
-    $(jqueryString).append(HTMLcontactGeneric.replace("%contact%",prop).replace("%data%",this.contacts[prop]));
-}
-*/
-
-/*
-work.display = function() {
-    this.jobs.some(function importWork(job, index) {
-        $("#workExperience").append(HTMLworkStart);
-        var employer = HTMLworkEmployer.replace("%data%",job.employer);
-        var title = HTMLworkTitle.replace("%data%",job.title);
-        // only add date if it exists
-        var dates = formatDate(job.dates) ? HTMLworkDates.replace("%data%",formatDate(job.dates)) : "";
-        var location = HTMLworkLocation.replace("%data%",job.location);
-        var description = HTMLworkDescription.replace("%data%",job.description);
-        $(".work-entry:last").append(employer + title + dates + location + description);
-        // When the number of jobs that have been appended is equal to the maxJobs set in config.js,
-        // the this.jobs.some() method will stop
-        return index + 1 >= maxJobs;
-    });
-}
-*/
 
 /*
 projects.display = function() {

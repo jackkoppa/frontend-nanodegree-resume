@@ -1,3 +1,4 @@
+// Header styles
 @import 'variables';
 @import 'mq';
 @import 'mixins';
@@ -82,84 +83,14 @@ header {
         }        
     }
 
-    #top-contacts {
-        display: block;
+    #top-contacts-list {
         flex: 80% 8 1;
-        li {
-            display: inline-block;
-            padding: (px2rem(g()) / 2) (px2rem(g())) (px2rem(g()) / 2) 0;
-            @include mq($until: sm) {
-                font-size: px2rem(f(p));
-            }
-            @include mq(sm) {
-                font-size: px2rem(f(h5));
-            }
-            @include mq(lg) {
-                font-size: px2rem(f(h4));
-            }
-
-            a {
-                display: block;
-
-                i {
-                    background-color: $secondary;
-                    box-shadow: $small-base-shadow;
-                    color: $white; 
-                    margin-right: px2rem(g()); 
-                    padding: px2rem(g()) / 2; 
-                }
-                
-                span {
-                    color: $dark-grey;                    
-                    padding: (px2rem(g()) / 2) 0; 
-                    position: relative;
-                    &:after {
-                        background-color: $secondary;
-                        bottom: 0;
-                        content: "";
-                        height: 2px;
-                        left: 0;
-                        max-width: 0%;
-                        position: absolute;
-                        transition: $fast-transition;
-                        width: 100%;
-                    }
-                }
-                
-                i, span { 
-                    display: inline-block;
-                    transition: $fast-transition;
-                }
-
-                &:hover i {
-                    box-shadow: $small-hover-shadow;
-                }
-
-                &:hover span {
-                    &:after {
-                        max-width: 100%;
-                    }
-                }
-            }
-        }        
     }
-
-    h2, #top-contacts {
-        @include mq($until: sm) {
-            font-size: px2rem(f(p));
-        }
-        @include mq(sm) {
-            font-size: px2rem(f(h3));
-        }
-        @include mq(lg) {
-            font-size: px2rem(f(h2));
-        }
-    }
-
-
 }
 
 #logo-wrapper {
+    // since aspect ratio of logo is known, these functions
+    // calculate the appropriate position of the logo
     @function calcLeft($base-width) {
         @return (100% / 12) * ((12 - $base-width)/4);
     }
@@ -180,14 +111,23 @@ header {
         margin-left: calcLeft(5);
         margin-top: calcTop(5);
     }
+    @include mq(xl) {
+        margin-left: calcLeft(4);
+        margin-top: calcTop(4);
+    }
 }
 
 #summary {
-    left: 0;
     position: relative;
     text-align: center;
     z-index: $z-top;
     h4 {
-        font-style: italic;
+        font-weight: 400;
+        margin: 0 auto;
+        @each $breakpoint, $px in $mq-breakpoints {
+            @include mq($breakpoint) {
+                font-size: px2rem(f(h1));
+            }
+        }
     }
 }

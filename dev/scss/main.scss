@@ -1,3 +1,143 @@
 @import 'variables';
 @import 'mq';
 @import 'mixins';
+
+section > h3 {
+	font-weight: 300;
+	text-transform: uppercase;
+	@each $breakpoint, $px in $mq-breakpoints {
+		@include mq($breakpoint) {
+			font-size: px2rem(f(h2));
+		}
+	}
+}
+
+#skills.container {
+	
+}
+
+// both education & work use .card styles
+.card {
+	align-items: flex-start;
+	position: relative;
+	&:before {
+		background-color: $white;
+		border: 4px solid $tertiary;
+		border-radius: 50%;
+		content: "";
+		height: px2rem(g());
+		right: px2rem(- g() * 2);
+		position: absolute;
+		width: px2rem(g());
+		z-index: $z-mid;
+		@include mq(sm) {
+			height: px2rem(g() * 2);
+			right: px2rem(- g() * 4);
+			width: px2rem(g() * 2);
+		}
+	}
+	&:not(.last):after {
+		background-color: $tertiary;
+		content: "";
+		height: 100%;
+		height: calc(100% + 3px);
+		position: absolute;
+		right: px2rem(- (g() * 1.5) + 2px);
+		width: 4px;
+		z-index: $z-bottom;
+		@include mq(sm) {
+			right: px2rem(- (g() * 3) + 2px);
+		}
+	}
+	.card-inner {
+		align-items: flex-start;
+		box-shadow: $base-shadow;
+		color: $dark-grey;
+		display: flex;
+		flex-direction: row-reverse;
+		flex-wrap: wrap;
+		text-align: right;
+		overflow: hidden;
+		position: relative;
+		transition: $std-transition;
+
+		.logo-wrapper {
+			position: absolute;
+			width: 80%;
+			opacity: 0.08;
+			@include mq(sm) {
+				width: 60%;
+			}				
+			@include mq(md) {
+				flex: 30% 3 1;
+				opacity: 1;
+				position: relative;
+			}
+			img {
+				width: 100%;
+				height: auto;
+
+			}
+		}	
+
+		.basics {
+			display: flex;
+			flex-wrap: wrap;
+			flex: 70% 7 5;
+			justify-content: flex-end;
+
+			h4 {
+				flex: 100% 10 1;
+				font-weight: 600;
+				text-transform: uppercase;
+				@each $breakpoint, $px in $mq-breakpoints {
+					@include mq($breakpoint) {
+						font-size: px2rem(f(h3));
+					}
+				}
+			}
+
+			span {
+				color: $mid-grey;
+				flex: initial;
+				padding-left: px2rem(g());
+				&.major {						
+					font-weight: 600;
+					padding-left: px2rem(f(p));
+					@each $breakpoint, $px in $mq-breakpoints {
+						@include mq($breakpoint) {
+							font-size: px2rem(f(h3));
+						}
+					}
+				}
+				&.minor {
+					flex: 100% 10 1;
+				}
+			}
+		}
+
+		.details {
+			list-style: none;
+
+			.detail {
+				border-right: 3px solid;
+				padding-right: px2rem(g());
+				&:not(:last-of-type) {
+					margin-bottom: px2rem(f(p));					
+				}
+			}
+		}
+
+		&:hover {
+			box-shadow: $hover-shadow;
+		}
+	}
+}
+
+#education.container {
+	flex-direction: row-reverse;
+}
+
+#work.container {
+	flex-direction: row;
+}

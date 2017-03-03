@@ -1,3 +1,4 @@
+// Base (mini framework) styles, applicable across multiple projects
 @import 'variables';
 @import 'mq';
 @import 'mixins';
@@ -66,12 +67,13 @@ img {
     display: block;
     max-width: 100%;
 }
-
+.full-wrap {
+    background-color: $light-grey;
+}
 /* Box Sizing & Padding Framework */
 .container {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 auto;
     max-width: px2rem(1200px);
     width: 100%;
     $currentpx: 0;
@@ -85,6 +87,9 @@ img {
             }
             $currentpx: map-get($gutters, $breakpoint);
         }
+    }
+    &.center {
+        margin: 0 auto;
     }
 }
 
@@ -100,6 +105,9 @@ img {
             }
             $currentpx: map-get($gutters, $breakpoint);
         }
+    }
+    &.center {        
+        margin: 0 auto;
     }
 }
 
@@ -152,22 +160,22 @@ img {
     }
 }
 
-/* display only above certain widths */
-[class^="hide-"] { 
-    display: none;
-    visibility: none;
-    max-height: 0;
-    max-width: 0;
-    overflow: hidden;
-}
-@each $bkpt, $px in $mq-breakpoints {
-    @include mq($bkpt) {
-        .hide-#{$bkpt} { 
+/* display & hide only at certain widths */
+@each $breakpoint, $px in $mq-breakpoints {
+    @include mq($breakpoint) {
+        .hide-#{$breakpoint} {
+            display: none;
+            visibility: none;
+            max-height: 0;
+            max-width: 0;
+            overflow: hidden;
+        }
+        .show-#{$breakpoint} {
             display: block;
             max-width: none;
             max-height: none;
             overflow: initial;
-            visibility: visible;
+            visibility: visible;    
         }
     }
 }

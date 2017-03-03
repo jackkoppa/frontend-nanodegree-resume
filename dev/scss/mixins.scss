@@ -34,10 +34,12 @@
 
     // allows for individual selection of media query font-sizes
     $size-options: map-get($font-sizes, $element);
-    @if $breakpoint == null and $currentFrom == false {
+    @if $breakpoint == null and $currentFrom == false and $currentUntil == false {
         $breakpoint: 'xs';
-    } @else {
+    } @else if $currentFrom != false {
         $breakpoint: $currentFrom;
+    } @else if $currentUntil != false {
+        $breakpoint: $currentUntil;
     }
     @if not map-has-key($size-options, $breakpoint) {
         @return map-get($size-options, 'xs');
