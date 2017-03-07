@@ -119,6 +119,7 @@ education.display = function() {
     var tpl = template.education;
     function prepareSchool(school,i,array) {
         var physical = school.location ? true : false;
+        var schoolType = physical ? "School" : "Program";
         var name = school.name ? school.name : (school.school ? school.school : "");
         var final = i >= array.length - 1;
         var output = "";
@@ -158,7 +159,7 @@ education.display = function() {
                 return detailList;
             });
         }        
-        output += school.url ? btnReplace(school.url, "Vist School Site", "_blank", "flat", true) : "";
+        output += school.url ? btnReplace(school.url, "Vist " + schoolType + " Site", "_blank", "flat", true) : "";
         output += tpl.elementEnd;
         output += tpl.endSpacer;
         return output;
@@ -183,12 +184,16 @@ work.display = function() {
                 job.imgDir + job.logo,
                 "",
                 job.employer + " Logo",
-                false);
+                false,
+                true,
+                "logo-wrapper element");
         }
+        output += template.divStart.replace("%class%","basics element");
         output += tpl.title.replace("%title%",job.title);
         output += tpl.employer.replace("%employer%",job.employer);
         output += tpl.location.replace("%location%",job.location);
         output += job.dates ? tpl.dates.replace("%dates%",formatDate(job.dates)) : "";
+        output += template.divEnd;
         output += tpl.description.replace("%description%",job.description);
         output += job.url ? tpl.linkEnd : "";
         output += tpl.elementEnd;

@@ -26,13 +26,11 @@ section > h3 {
 		border-radius: 50%;
 		content: "";
 		height: px2rem(g());
-		right: px2rem(- g() * 2);
 		position: absolute;
 		width: px2rem(g());
 		z-index: $z-mid;
 		@include mq(sm) {
 			height: px2rem(g() * 2);
-			right: px2rem(- g() * 4);
 			width: px2rem(g() * 2);
 		}
 	}
@@ -42,21 +40,15 @@ section > h3 {
 		height: 100%;
 		height: calc(100% + 3px);
 		position: absolute;
-		right: px2rem(- (g() * 1.5) + 2px);
 		width: 4px;
 		z-index: $z-bottom;
-		@include mq(sm) {
-			right: px2rem(- (g() * 3) + 2px);
-		}
 	}
 	.card-inner {
 		align-items: flex-start;
 		box-shadow: $base-shadow;
 		color: $dark-grey;
 		display: flex;
-		flex-direction: row-reverse;
 		flex-wrap: wrap;
-		text-align: right;
 		overflow: hidden;
 		position: relative;
 		transition: $std-transition;
@@ -136,8 +128,46 @@ section > h3 {
 
 #education.container {
 	flex-direction: row-reverse;
+	.card.education {
+		&:before {
+			right: px2rem(- g() * 2);
+			@include mq(sm) {
+				right: px2rem(- g() * 4);
+			}
+		}
+		&:not(.last):after {
+			right: px2rem(- (g() * 1.5) + 2px);
+			@include mq(sm) {
+				right: px2rem(- (g() * 3) + 2px);
+			}
+		}
+
+		.card-inner {
+			flex-direction: row-reverse;
+			text-align: right;
+		}
+	}
 }
 
 #work.container {
 	flex-direction: row;
+	.card.education {
+		&:before {
+			left: px2rem(- g() * 2);
+			@include mq(sm) {
+				left: px2rem(- g() * 4);
+			}
+		}
+		&:not(.last):after {
+			left: px2rem(- (g() * 1.5) + 2px);
+			@include mq(sm) {
+				left: px2rem(- (g() * 3) + 2px);
+			}
+		}
+
+		.card-inner {
+			flex-direction: row;
+			text-align: left;
+		}
+	}
 }
