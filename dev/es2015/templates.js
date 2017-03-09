@@ -59,7 +59,7 @@ template.work = {
 
 // General templates
 //// Div templates
-template.fullDiv = '<div id="%id%" class="%class%></div>';
+template.fullDiv = '<div class="%class%"></div>';
 template.divStart = '<div class="%class%">';
 template.divEnd = '</div>';
 //// Image templates

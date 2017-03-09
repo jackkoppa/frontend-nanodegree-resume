@@ -17,7 +17,7 @@ git submodule update --init --recursive
 More info in the [`resume-data` documentation](https://github.com/jackkoppa/resume-data#readme), and at this [GitHub article](https://github.com/blog/2104-working-with-submodules) on submodules.
 
 ### General Dependencies
-* Node.js & npm [link](https://nodejs.org/en/download/)
+* Node.js & npm ([link](https://nodejs.org/en/download/))
 * Grunt.js (after installing Node & npm, run `npm install -g grunt-cli`. [More info](https://gruntjs.com/getting-started))
 * ImageMagick (required, in order to use responsive images. [Download instructions](https://www.imagemagick.org/script/download.php))
 
@@ -42,7 +42,7 @@ to install the dev dependencies. After that, run one of the following Grunt task
     ```
 
 
-* compile, lint, & launch a livereloading server (`localhost:8080`) for the production build:
+* compile, lint, & launch a persistent server without livereload (`localhost:8080`) for the production build:
     ```shell
     grunt serveProd
     ```

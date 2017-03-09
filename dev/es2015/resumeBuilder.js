@@ -159,7 +159,7 @@ education.display = function() {
                 return detailList;
             });
         }        
-        output += school.url ? btnReplace(school.url, "Vist " + schoolType + " Site", "_blank", "flat", true) : "";
+        output += school.url ? btnReplace(school.url, "Vist " + schoolType + " Site", "_blank", "flat", true, "box-xs-12") : "";
         output += tpl.elementEnd;
         output += tpl.endSpacer;
         return output;
@@ -179,7 +179,7 @@ work.display = function() {
         var output = "";
         output += final ? tpl.elementStart.replace("%class%","last") : tpl.elementStart.replace("%class%","");
         output += job.url ? tpl.linkStart.replace("%url%",job.url) : "";
-        if(job.logo) {
+        if (job.logo) {
             output += imgReplace(
                 job.imgDir + job.logo,
                 "",
@@ -196,7 +196,17 @@ work.display = function() {
         output += template.divEnd;
         output += tpl.description.replace("%description%",job.description);
         output += job.url ? tpl.linkEnd : "";
-        output += tpl.elementEnd;
+        if (job.urls.companySite && job.urls.projectSite) {
+            output += template.fullDiv.replace("%class%","spacer box-xs-3")
+            output += btnReplace(job.urls.companySite.url, job.urls.companySite.siteType + " Site", "_blank", "flat", true, "box-xs-3");
+            output += btnReplace(job.urls.projectSite.url, "Related " + job.urls.projectSite.siteType, "_blank", "flat", true, "box-xs-3");
+            output += template.fullDiv.replace("%class%","spacer box-xs-3");
+        } else if (job.urls.companySite) {
+            output += btnReplace(job.urls.companySite.url, job.urls.companySite.siteType + " Site", "_blank", "flat", true, "box-xs-12");            
+        } else if (job.urls.projectSite) {
+            output += btnReplace(job.urls.projectSite.url, "Related " + job.urls.projectSite.siteType, "_blank", "flat", true, "box-xs-12");            
+        }
+        output += tpl.elementEnd;  
         return output;
     }
     this.jobs.forEach(function(job,index,jobs) {
