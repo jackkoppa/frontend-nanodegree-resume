@@ -143,7 +143,7 @@ module.exports = function(grunt) {
             // to create final minified .js file
             dev: {
                 src: es2015Files,
-                dest: 'dev/es2015/compiledScripts.js'
+                dest: 'dev/es2015/resumeScripts.js'
             }
         },
 
