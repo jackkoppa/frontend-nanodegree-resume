@@ -11,6 +11,9 @@ $mq-breakpoints: (
 // Typography
 $base-font-size: 16px !default;
 
+// Set max width for normal container elements
+$max-content-width: 1200px;
+
 // Broken down into nested sass maps to define media query font sizes
 $font-sizes: (
     h1: (xs: 24px, sm: 36px, md: 42px, lg: 66px, xl: 72px),

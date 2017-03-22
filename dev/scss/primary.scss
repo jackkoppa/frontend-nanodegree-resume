@@ -132,3 +132,8 @@ a.link-button {
 		padding: px2rem(g());
 	}
 }
+
+// Bar between spans
+span.bar {
+	padding: 0 px2em(g());
+}

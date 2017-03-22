@@ -29,10 +29,10 @@ template.education = {
     linkStart: '<div href="%url%" target="_blank">',
     school: '<h4>%school%</h4>',
     location: '<span class="location">%location%</span>',
-    degree: '<span class="major">%degree%%major%</span>',
+    degree: '<h5 class="major">%degree%%major%</h5>',
     minor: '<span class="minor">Minor - %minor%</span>',
     dates: '<span class="dates">%dates%</span>',
-    details: '<ul class="details element">%details%</ul>',
+    details: '<div class="details-wrapper"><p class="details-header">Highlights <i class="icon-plus"></i></p><ul class="details">%details%</ul></div>',
     detail: '<li class="detail">%detail%</li>',
     elementEnd: '</div></div>',
     endSpacer: '<div class="spacer box-md-1 box-lg-2"></div>'
@@ -43,11 +43,11 @@ template.work = {
     startSpacer: '<div class="spacer box-xs-1"></div>',
     elementStart: '<div class="job card %class% container box-xs-11 box-md-10 box-lg-9"><div class="card-inner container">',
     linkStart: '<a href="%url%" target="_blank">',
-    title: '<h4>%title%</h4>',
-    employer: '<h5>%employer%</h5>',
+    employer: '<h4>%employer%</h5>',
     location: '<span class="location">%location%</span>',
     dates: '<span class="dates">%dates%</span>',
-    description: '<p class="description">%description%</p>',
+    title: '<h5 class="title">%title%</h5>',
+    description: '<div class="details-wrapper">%header%<p>%description%</p></div>',
     linkEnd: '</a>',
     elementEnd: '</div></div>',
     endSpacer: '<div class="spacer box-md-1 box-lg-2"></div>'
@@ -69,7 +69,8 @@ template.divImg = '<div class="image-wrapper %class%">' + template.img + '</div>
 template.bar = '<span class="bar">|</span>';
 //// Links
 template.buttonLink = '<a class="link-button %linkClass%" href="%url%" target="%target%"><button>%linkText%</button></a>';
-
+//// Header for expanding accordions
+template.accordionHeader = '<p class="accordion-header">%title% <i class="icon-plus"></i><i class="icon-minus"></i></p>'
 
 // set tpl equal to base object (local tpl vars are defined within each object in resumeBuilder.js)
 var tpl = template;

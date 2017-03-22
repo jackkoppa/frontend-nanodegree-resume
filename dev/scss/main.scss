@@ -76,7 +76,6 @@ section > h3 {
 			display: flex;
 			flex-wrap: wrap;
 			flex: 70% 7 5;
-			justify-content: flex-end;
 
 			h4 {
 				flex: 100% 10 1;
@@ -89,22 +88,23 @@ section > h3 {
 				}
 			}
 
-			span {
+			h5 {
 				color: $mid-grey;
-				flex: initial;
-				padding-left: px2rem(g());
-				&.major {						
-					font-weight: 600;
-					padding-left: px2rem(f(p));
-					@each $breakpoint, $px in $mq-breakpoints {
-						@include mq($breakpoint) {
-							font-size: px2rem(f(h3));
-						}
+				flex: initial;						
+				font-weight: 600;
+				@each $breakpoint, $px in $mq-breakpoints {
+					@include mq($breakpoint) {
+						font-size: px2rem(f(h3));
 					}
 				}
-				&.minor {
-					flex: 100% 10 1;
+				&.title {
+					width: 100%;
 				}
+			}
+
+			.minor {
+				color: $mid-grey;
+				flex: 100% 10 1;
 			}
 		}
 
@@ -145,6 +145,10 @@ section > h3 {
 		.card-inner {
 			flex-direction: row-reverse;
 			text-align: right;
+
+			.basics {
+				flex-direction: row-reverse;
+			}
 		}
 	}
 }
@@ -168,6 +172,10 @@ section > h3 {
 		.card-inner {
 			flex-direction: row;
 			text-align: left;
+
+			.basics {
+				flex-direction: row;
+			}
 		}
 	}
 }

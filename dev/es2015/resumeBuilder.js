@@ -149,16 +149,19 @@ education.display = function() {
             output += tpl.degree.replace("%degree%%major%",school.title);
         }
         output += school.minor ? tpl.minor.replace("%minor%",school.minor) : "";
-        output += template.divEnd;
+        
         if (school.details) {
-            output += tpl.details.replace("%details%", function() {
-                var detailList = "";
-                school.details.forEach(function(detail) {
-                    detailList += tpl.detail.replace("%detail%",detail);
-                });
-                return detailList;
-            });
-        }        
+            output += tpl.details
+                .replace("%details%", function() {
+                    var detailList = "";
+                    school.details.forEach(function(detail) {
+                        detailList += tpl.detail.replace("%detail%",detail);
+                    });
+                    return detailList;
+                })
+                .replace("%header%",template.accordionHeader.replace("%title%","Highlights"));
+        }  
+        output += template.divEnd;      
         output += school.url ? btnReplace(school.url, "Vist " + schoolType + " Site", "_blank", "flat", true, "box-xs-12") : "";
         output += tpl.elementEnd;
         output += tpl.endSpacer;
@@ -178,7 +181,6 @@ work.display = function() {
         var final = i >= array.length - 1;
         var output = "";
         output += final ? tpl.elementStart.replace("%class%","last") : tpl.elementStart.replace("%class%","");
-        output += job.url ? tpl.linkStart.replace("%url%",job.url) : "";
         if (job.logo) {
             output += imgReplace(
                 job.imgDir + job.logo,
@@ -189,18 +191,19 @@ work.display = function() {
                 "logo-wrapper element");
         }
         output += template.divStart.replace("%class%","basics element");
-        output += tpl.title.replace("%title%",job.title);
         output += tpl.employer.replace("%employer%",job.employer);
         output += tpl.location.replace("%location%",job.location);
-        output += job.dates ? tpl.dates.replace("%dates%",formatDate(job.dates)) : "";
+        output += job.dates ? template.bar + tpl.dates.replace("%dates%",formatDate(job.dates)) : "";
+        output += tpl.title.replace("%title%",job.title);        
+        output += tpl.description
+            .replace("%description%",job.description)
+            .replace("%header%",template.accordionHeader.replace("%title%","Summary"));
         output += template.divEnd;
-        output += tpl.description.replace("%description%",job.description);
-        output += job.url ? tpl.linkEnd : "";
         if (job.urls.companySite && job.urls.projectSite) {
-            output += template.fullDiv.replace("%class%","spacer box-xs-3")
-            output += btnReplace(job.urls.companySite.url, job.urls.companySite.siteType + " Site", "_blank", "flat", true, "box-xs-3");
-            output += btnReplace(job.urls.projectSite.url, "Related " + job.urls.projectSite.siteType, "_blank", "flat", true, "box-xs-3");
-            output += template.fullDiv.replace("%class%","spacer box-xs-3");
+            output += template.fullDiv.replace("%class%","spacer hide-xs show-lg box-lg-2");
+            output += btnReplace(job.urls.companySite.url, job.urls.companySite.siteType + " Site", "_blank", "flat", true, "box-xs-12 box-md-6 box-lg-4");
+            output += btnReplace(job.urls.projectSite.url, "Related " + job.urls.projectSite.siteType, "_blank", "flat", true, "box-xs-12 box-md-6 box-lg-4");
+            output += template.fullDiv.replace("%class%","spacer hide-xs show-lg box-lg-2");
         } else if (job.urls.companySite) {
             output += btnReplace(job.urls.companySite.url, job.urls.companySite.siteType + " Site", "_blank", "flat", true, "box-xs-12");            
         } else if (job.urls.projectSite) {

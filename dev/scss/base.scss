@@ -67,15 +67,17 @@ img {
     display: block;
     max-width: 100%;
 }
-.full-wrap {
-    background-color: $light-grey;
-}
+
 /* Box Sizing & Padding Framework */
-.container {
+// generic wrapper div, which just determines display of child elements (no padding)
+.wrapper {
     display: flex;
     flex-wrap: wrap;
-    max-width: px2rem(1200px);
-    width: 100%;
+}
+
+// wrapper div with built-in padding; for most layouts, this is *half* of the expected padding between sections
+.container {
+    @extend .wrapper;
     $currentpx: 0;
     @each $breakpoint, $px in $mq-breakpoints {
         @if $px == null {
@@ -88,11 +90,9 @@ img {
             $currentpx: map-get($gutters, $breakpoint);
         }
     }
-    &.center {
-        margin: 0 auto;
-    }
 }
 
+// single block, used within .container. The padding here is the other half of expected padding between sections
 .element {
     $currentpx: 0;
     @each $breakpoint, $px in $mq-breakpoints {
@@ -106,63 +106,38 @@ img {
             $currentpx: map-get($gutters, $breakpoint);
         }
     }
-    &.center {        
-        margin: 0 auto;
-    }
+}
+
+.center { margin: 0 auto; }
+.relative { position: relative; }
+.absolute { 
+    position: absolute; 
+    left: 0;
+    top: 0;
+}
+
+// elements without a max width
+.full-wrap {
+    max-width: initial;
+    width: 100%;
+}
+
+// set a max-width for any box elements
+.box-max-width {
+    max-width: px2rem($max-content-width);
 }
 
 // xs, sm, md, lg, xl Box Sizing
-/* xs (base size) */
-.box-xs-0 { display: none; }
-@for $i from 1 through 12 {
-    .box-xs-#{$i} {
-        width: (100% / 12) * $i;
-    }
-}
-
-/* sm (mobile) */
-@include mq(sm) {
-    .box-sm-0 { display: none; }
-    @for $i from 1 through 12 {
-        .box-sm-#{$i} {
-            width: (100% / 12) * $i;
-        }
-    }
-}
-
-/* md (tablet) */
-@include mq(md) {
-    .box-md-0 { display: none; }
-    @for $i from 1 through 12 {
-        .box-md-#{$i} {
-            width: (100% / 12) * $i;
-        }
-    }
-}
-
-/* lg (laptop) */
-@include mq(lg) {
-    .box-lg-0 { display: none; }
-    @for $i from 1 through 12 {
-        .box-lg-#{$i} {
-            width: (100% / 12) * $i;
-        }
-    }
-}
-
-/* xl (desktop) */
-@include mq(xl) {
-    .box-xl-0 { display: none; }
-    @for $i from 1 through 12 {
-        .box-xl-#{$i} {
-            width: (100% / 12) * $i;
-        }
-    }
-}
-
-/* display & hide only at certain widths */
+/* box sizing, with media queries */
 @each $breakpoint, $px in $mq-breakpoints {
-    @include mq($breakpoint) {
+    @if $px == null {
+        @for $i from 1 through 12 {
+            .box-#{$breakpoint}-#{$i} {
+                width: (100% / 12) * $i;
+                @extend .box-max-width;
+            }            
+        }
+        /* display & hide only at certain widths */
         .hide-#{$breakpoint} {
             display: none;
             visibility: none;
@@ -177,5 +152,47 @@ img {
             overflow: initial;
             visibility: visible;    
         }
+    } @else  {
+        @include mq($breakpoint) {
+            @for $i from 1 through 12 {
+                .box-#{$breakpoint}-#{$i} {
+                    width: (100% / 12) * $i;
+                }
+            }
+            /* display & hide only at certain widths */
+            .hide-#{$breakpoint} {
+                display: none;
+                visibility: none;
+                max-height: 0;
+                max-width: 0;
+                overflow: hidden;
+            }
+            .show-#{$breakpoint} {
+                display: block;
+                max-width: none;
+                max-height: none;
+                overflow: initial;
+                visibility: visible;    
+            }
+        }        
     }
 }
+
+// Coloring
+.primary { color: $primary; }
+.secondary { color: $secondary; }
+.tertiary { color: $tertiary; }
+.white { color: $white; }
+.black { color: $black; }
+.light-grey { color: $light-grey; }
+.mid-grey { color: $mid-grey; }
+.dark-grey { color: $dark-grey; }
+
+.primary-bg { background-color: $primary; }
+.secondary-bg { background-color: $secondary; }
+.tertiary-bg { background-color: $tertiary; }
+.white-bg { background-color: $white; }
+.black-bg { background-color: $black; }
+.light-grey-bg { background-color: $light-grey; }
+.mid-grey-bg { background-color: $mid-grey; }
+.dark-grey-bg { background-color: $dark-grey; }

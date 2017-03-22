@@ -159,6 +159,18 @@
       "src": "fontawesome"
     },
     {
+      "uid": "44e04715aecbca7f266a17d5a7863c68",
+      "css": "plus",
+      "code": 59401,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "861ab06e455e2de3232ebef67d60d708",
+      "css": "minus",
+      "code": 59402,
+      "src": "fontawesome"
+    },
+    {
       "uid": "2dca832362a5c0989ec4a9d0acce53bd",
       "css": "php",
       "code": 59396,
