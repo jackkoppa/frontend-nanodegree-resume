@@ -1,4 +1,12 @@
 module.exports = function(grunt) {
+    // list of ES files that should be compiled by Babel
+    var es2015Files = [
+        'dev/es2015/config.js',
+        'dev/es2015/templates.js',
+        'dev/es2015/helper.js',
+        'dev/es2015/interaction.js',
+        'dev/es2015/resumeBuilder.js',
+    ];
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -125,15 +133,17 @@ module.exports = function(grunt) {
             }
         },
 
+        // concat js files, primarily for easy linting purposes (with all variables in same file)
         concat: {
             options: {
                 separator: '\n'
             },
+
             // in development, this is just for easy linting. Task is also used in production build,
             // to create final minified .js file
             dev: {
-                src: ['dev/es2015/config.js', 'dev/es2015/resume.js', 'dev/es2015/templates.js', 'dev/es2015/helper.js', 'dev/es2015/resumeBuilder.js'],
-                dest: 'dev/es2015/resumeScripts.js'
+                src: es2015Files,
+                dest: 'dev/es2015/compiledScripts.js'
             }
         },
 

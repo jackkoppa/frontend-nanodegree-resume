@@ -32,7 +32,7 @@ template.education = {
     degree: '<h5 class="major">%degree%%major%</h5>',
     minor: '<span class="minor">Minor - %minor%</span>',
     dates: '<span class="dates">%dates%</span>',
-    details: '<div class="details-wrapper"><p class="details-header">Highlights <i class="icon-plus"></i></p><ul class="details">%details%</ul></div>',
+    details: '<div class="details-wrapper accordion">%header%<ul class="accordion-content">%details%</ul></div>',
     detail: '<li class="detail">%detail%</li>',
     elementEnd: '</div></div>',
     endSpacer: '<div class="spacer box-md-1 box-lg-2"></div>'
@@ -47,7 +47,7 @@ template.work = {
     location: '<span class="location">%location%</span>',
     dates: '<span class="dates">%dates%</span>',
     title: '<h5 class="title">%title%</h5>',
-    description: '<div class="details-wrapper">%header%<p>%description%</p></div>',
+    description: '<div class="details-wrapper accordion">%header%<p class="accordion-content">%description%</p></div>',
     linkEnd: '</a>',
     elementEnd: '</div></div>',
     endSpacer: '<div class="spacer box-md-1 box-lg-2"></div>'

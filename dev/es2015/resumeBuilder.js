@@ -244,8 +244,13 @@ projects.display = function() {
 }
 */
 
-
+// Initialize data importing
 bio.display();
 education.display();
 work.display();
-// projects.display();
+
+// All interaction scripting
+$(document).ready(function() {
+    // Accordions
+    $(".accordion-header").click(handleAccordionClick(this));
+});

@@ -137,3 +137,46 @@ a.link-button {
 span.bar {
 	padding: 0 px2em(g());
 }
+
+// Accordions
+.accordion {
+	.accordion-header {
+		cursor: pointer;
+		display: inline-block;
+		padding: px2rem(g());
+
+		i {
+			transition: $std-transition;
+		}
+		i:not(:first-of-type) {
+			margin-left: -1.4em;
+		}		
+		i.icon-plus {
+			opacity: 1;
+		}
+		i.icon-minus {
+			opacity: 0;
+		}
+	}
+
+	.accordion-content {
+		max-height: 0;
+		overflow: hidden;
+		transition: $std-transition;
+	}
+
+	&.open {
+		.accordion-header {
+			i.icon-plus {
+				opacity: 0;
+			}
+			i.icon-minus {
+				opacity: 1;
+			}
+		}
+
+		.accordion-content {
+			max-height: 100%;
+		}
+	}
+}
