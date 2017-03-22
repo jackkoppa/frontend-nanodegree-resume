@@ -2,6 +2,7 @@ module.exports = function(grunt) {
     // list of ES files that should be compiled by Babel
     var es2015Files = [
         'dev/es2015/config.js',
+        'dev/es2015/resume.js',
         'dev/es2015/templates.js',
         'dev/es2015/helper.js',
         'dev/es2015/interaction.js',
