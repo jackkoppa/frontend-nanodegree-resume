@@ -40,7 +40,8 @@ $white-semi-transparent: rgba(255,255,255,0.7);
 // Styling
 $fast-transition: 0.1s all linear;
 $std-transition: 0.3s all ease;
-$slow-transition: 1.25s all ease;
+$slow-transition: 0.75s all ease;
+$very-slow-transition: 1.25s all ease;
 
 $small-base-shadow: 1px 1px 2px -1px $black;
 $small-hover-shadow: 1px 1px 7px -1px $black;

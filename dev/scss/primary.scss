@@ -140,13 +140,15 @@ span.bar {
 
 // Accordions
 .accordion {
+	transition: $slow-transition;
+	
 	.accordion-header {
 		cursor: pointer;
 		display: inline-block;
 		padding: px2rem(g());
 
 		i {
-			transition: $std-transition;
+			transition: $slow-transition;
 		}
 		i:not(:first-of-type) {
 			margin-left: -1.4em;
@@ -162,7 +164,7 @@ span.bar {
 	.accordion-content {
 		max-height: 0;
 		overflow: hidden;
-		transition: $std-transition;
+		transition: $slow-transition;
 	}
 
 	&.open {

@@ -252,5 +252,4 @@ work.display();
 // All interaction scripting
 $(document).ready(function() {
     // Accordions
-    $(".accordion-header").click(handleAccordionClick(this));
 });

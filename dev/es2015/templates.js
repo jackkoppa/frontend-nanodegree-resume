@@ -70,7 +70,7 @@ template.bar = '<span class="bar">|</span>';
 //// Links
 template.buttonLink = '<a class="link-button %linkClass%" href="%url%" target="%target%"><button>%linkText%</button></a>';
 //// Header for expanding accordions
-template.accordionHeader = '<p class="accordion-header">%title% <i class="icon-plus"></i><i class="icon-minus"></i></p>'
+template.accordionHeader = '<p class="accordion-header" onclick="handleAccordionClick(this)">%title% <i class="icon-plus"></i><i class="icon-minus"></i></p>'
 
 // set tpl equal to base object (local tpl vars are defined within each object in resumeBuilder.js)
 var tpl = template;
