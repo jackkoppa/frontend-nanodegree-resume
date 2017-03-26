@@ -140,6 +140,8 @@ span.bar {
 
 // Accordions
 .accordion {
+	max-height: px2rem($base-font-size + (g() * 2));
+	overflow: hidden;
 	transition: $slow-transition;
 	
 	.accordion-header {
@@ -162,9 +164,6 @@ span.bar {
 	}
 
 	.accordion-content {
-		max-height: 0;
-		overflow: hidden;
-		transition: $slow-transition;
 	}
 
 	&.open {
@@ -175,10 +174,6 @@ span.bar {
 			i.icon-minus {
 				opacity: 1;
 			}
-		}
-
-		.accordion-content {
-			max-height: 100%;
 		}
 	}
 }
