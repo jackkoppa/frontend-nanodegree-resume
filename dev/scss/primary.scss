@@ -74,6 +74,8 @@
     &:not(.links-list) li {
     	background-color: $primary;
     	box-shadow: $base-shadow;
+    	cursor: default;
+    	transition: $fast-transition;
     	@include mq(md) {
     	    font-size: px2rem(f(h3));
     	}
@@ -88,6 +90,10 @@
     	    color: $white;                    
     	    padding: (px2em(g()) / 2) px2em(g()) (px2em(g()) / 2) 0; 
     	} 
+
+    	&:hover {
+    		box-shadow: $hover-shadow;
+    	}
     }        
 }
 
