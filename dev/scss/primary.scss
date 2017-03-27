@@ -140,6 +140,8 @@ span.bar {
 
 // Accordions
 .accordion {
+	box-sizing: content-box;
+	margin: px2rem(g()) 0;
 	max-height: px2rem($base-font-size + (g() * 2));
 	overflow: hidden;
 	transition: $slow-transition;
@@ -147,7 +149,8 @@ span.bar {
 	.accordion-header {
 		cursor: pointer;
 		display: inline-block;
-		padding: px2rem(g());
+		line-height: 1em;
+		padding: px2rem(g()) 0;
 
 		i {
 			transition: $slow-transition;
@@ -164,6 +167,7 @@ span.bar {
 	}
 
 	.accordion-content {
+		padding: 0 0 px2rem(g());
 	}
 
 	&.open {

@@ -107,15 +107,19 @@ section > h3 {
 				flex: 100% 10 1;
 			}
 		}
+		
+		.accordion {
+			border-top: 5px solid $mid-grey;
+			
+			ul.accordion-content {
+				list-style: none;
 
-		ul.accordion-content {
-			list-style: none;
-
-			.detail {
-				border-right: 3px solid;
-				padding-right: px2rem(g());
-				&:not(:last-of-type) {
-					margin-bottom: px2rem(f(p));					
+				.detail {
+					border-right: 3px solid;
+					padding-right: px2rem(g());
+					&:not(:last-of-type) {
+						margin-bottom: px2rem(f(p));					
+					}
 				}
 			}
 		}
