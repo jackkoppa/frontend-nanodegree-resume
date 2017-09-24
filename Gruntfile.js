@@ -152,8 +152,7 @@ module.exports = function(grunt) {
             // all js development done within dev/es2015 directory to use new features,
             // then compiled to dev/js for actual use in the browseer
             options: {
-                sourceMap: true,
-                presets: ['es2015']
+                sourceMap: true
             },
             dev: {
                 files: [{
@@ -204,7 +203,8 @@ module.exports = function(grunt) {
                 browser: true,
                 devel: true,
                 sub: true,
-                strict: "global"
+                strict: "global",
+                esversion: 6
             },
             // for ease of comparing declared variables, only lints the concatenated file,
             // even though the development index.html is drawing from its source files for easy Chrome debugging

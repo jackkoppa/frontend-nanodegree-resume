@@ -1,6 +1,7 @@
 /*
 A few changeable, essential project setup variables (only affect client-side functions, not Grunt setup)
 */
+"use strict";
 
 // Maximum number of items to display
 // Jobs
